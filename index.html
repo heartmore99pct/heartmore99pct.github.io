@@ -12,7 +12,7 @@
     }
     .sidebar {
       width: 20%;
-      padding: 40px;
+      padding: 40px; /* 기존 80px → 40px로 줄여서 위로 이동 */
       color: white;
       font-size: 14px;
       line-height: 1.8;
@@ -23,11 +23,11 @@
     }
     .sidebar a:hover { text-decoration: underline; }
     .content {
-      width: 80%;
+      width: 70%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      padding: 40px;
+      gap: 15px;
+      padding: 100px;
     }
     .content img {
       width: 100%;
@@ -66,18 +66,4 @@
       overlay.style.left = 0;
       overlay.style.width = '100vw';
       overlay.style.height = '100vh';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      overlay.style.display = 'flex';
-      overlay.style.justifyContent = 'center';
-      overlay.style.alignItems = 'center';
-      overlay.onclick = () => document.body.removeChild(overlay);
-      const bigImg = document.createElement('img');
-      bigImg.src = img.src;
-      bigImg.style.maxWidth = '80vw';
-      bigImg.style.maxHeight = '80vh';
-      overlay.appendChild(bigImg);
-      document.body.appendChild(overlay);
-    }
-  </script>
-</body>
-</html>
+      overlay.style.backgr
