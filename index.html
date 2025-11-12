@@ -69,7 +69,7 @@
       background-color: rgba(255, 255, 255, 0.5); /* 반투명 */
       color: #FF0051;
       border: none;
-      padding: 10px 4px;
+      padding: 10px 5px;
       font-size: 18px;
       border-radius: 0%;
       z-index: 1000;
@@ -130,7 +130,7 @@
 </head>
 <body>
   <!-- 모바일 메뉴 버튼 -->
-  <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">♪</button>
+  <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()"> ♪</button>
 
   <!-- 사이드바 -->
   <div class="sidebar" id="sidebar">
@@ -165,7 +165,7 @@
       const sidebar = document.getElementById('sidebar');
       const toggleBtn = document.getElementById('toggleBtn');
       sidebar.classList.toggle('active');
-      toggleBtn.innerHTML = sidebar.classList.contains('active') ? '♪' : '♪'; // < / >
+      toggleBtn.innerHTML = sidebar.classList.contains('active') ? ' ♪' : ' ♪'; // < / >
     }
 
     function enlarge(img) {
