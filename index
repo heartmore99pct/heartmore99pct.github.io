@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>heartmore99pct</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #ffb6c1;
+      font-family: Helvetica, sans-serif;
+      display: flex;
+    }
+    .sidebar {
+      width: 20%;
+      padding: 40px;
+      color: white;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+    }
+    .sidebar a:hover { text-decoration: underline; }
+    .content {
+      width: 80%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 40px;
+    }
+    .content img {
+      width: 100%;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h3>heartmore99pct</h3>
+    <p><b>1.</b><br><b>2.</b><br><b>3.</b></p>
+    <p><a href="#">INSTAGRAM</a><br>
+       <a href="#">TWITTER</a><br>
+       <a href="#">MAIL</a></p>
+  </div>
+  <div class="content">
+    <img src="image1.jpg" onclick="enlarge(this)">
+    <img src="image2.jpg" onclick="enlarge(this)">
+    <img src="image3.jpg" onclick="enlarge(this)">
+    <img src="image4.jpg" onclick="enlarge(this)">
+    <img src="image5.jpg" onclick="enlarge(this)">
+  </div>
+
+  <script>
+    function enlarge(img) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.onclick = () => document.body.removeChild(overlay);
+      const bigImg = document.createElement('img');
+      bigImg.src = img.src;
+      bigImg.style.maxWidth = '80vw';
+      bigImg.style.maxHeight = '80vh';
+      overlay.appendChild(bigImg);
+      document.body.appendChild(overlay);
+    }
+  </script>
+</body>
+</html>
