@@ -3,56 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <title>Heartmore99Percent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* 구글 폰트 불러오기 */
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
     body {
       margin: 0;
-      background-color: #FFAEC9;
       font-family: 'STIX Two Text', Helvetica, sans-serif;
+      background-color: #FFAEC9;
       display: flex;
     }
+
+    /* 사이드바 */
     .sidebar {
       width: 20%;
       padding: 50px 80px 80px 80px;
       color: white;
       font-size: 14px;
       line-height: 1.8;
+      /* background-color 제거 */
+      transition: transform 0.3s ease;
     }
-    /* 1.2.3 항목 */
+
     .sidebar b a {
       color: #FF0051;
       text-decoration: none;
-      font-family: 'STIX Two Text', Helvetica, sans-serif;
     }
     .sidebar b a:hover { text-decoration: underline; }
 
-    /* INSTAGRAM, X, MAIL 링크 */
     .sidebar p a.special-link {
       color: #787878;
       font-style: italic;
       text-decoration: none;
-      font-family: 'STIX Two Text', Helvetica, sans-serif;
     }
     .sidebar p a.special-link:hover { text-decoration: underline; }
 
+    /* 콘텐츠 영역 */
     .content {
-      width: 90%;
+      width: 80%;
+      padding: 75px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
-      padding: 75px;
     }
     .content img {
       width: 100%;
       cursor: pointer;
-      border-radius: 0px;
+      border-radius: 0;
+    }
+
+    /* 모바일 전용 */
+    .toggle-btn {
+      display: none;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: white;
+      color: pink;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .mobile-header {
+      display: none;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .mobile-header img {
+      width: 60px;
+      margin-top: 10px;
+      border-radius: 50%;
+    }
+
+    /* 모바일 레이아웃 */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .toggle-btn {
+        display: block;
+      }
+
+      .sidebar {
+        width: 70%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 50px 20px;
+        transform: translateX(-100%);
+        z-index: 999;
+        background-color: rgba(0,0,0,0.95); /* 모바일은 기존 색 유지 */
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .content {
+        width: 100%;
+        padding: 20px;
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .mobile-header {
+        display: block;
+        color: white;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <!-- 모바일 메뉴 버튼 -->
+  <button class="toggle-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+
+  <!-- 사이드바 -->
+  <div class="sidebar" id="sidebar">
     <h3>Heartmore99%</h3>
     <p>
       <b><a href="#">1.</a></b><br>
@@ -65,7 +137,15 @@
       <a href="#" class="special-link">MAIL</a>
     </p>
   </div>
+
+  <!-- 콘텐츠 -->
   <div class="content">
+    <!-- 모바일 상단용 헤더 -->
+    <div class="mobile-header">
+      <h3>Heartmore99%</h3>
+    </div>
+
+    <!-- 이미지 갤러리 -->
     <img src="새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg" onclick="enlarge(this)">
     <img src="새 폴더 (4)/5acd0cc2f1174921b9b3fb78de4d26ab~tplv-wopfjsm1ax-aigc_resize_4096_4096.webp" onclick="enlarge(this)">
     <img src="image3.jpg" onclick="enlarge(this)">
@@ -74,6 +154,10 @@
   </div>
 
   <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
     function enlarge(img) {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
