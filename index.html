@@ -2,32 +2,47 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>heartmore99pct</title>
+  <title>Heartmore99Percent</title>
   <style>
+    /* 구글 폰트 불러오기 */
+    @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
+
     body {
       margin: 0;
-      background-color: #ffb6c1;
-      font-family: Helvetica, sans-serif;
+      background-color: #FFAEC9;
+      font-family: 'STIX Two Text', Helvetica, sans-serif;
       display: flex;
     }
     .sidebar {
       width: 20%;
-      padding: 40px; /* 기존 80px → 40px로 줄여서 위로 이동 */
+      padding: 50px 80px 80px 80px;
       color: white;
       font-size: 14px;
       line-height: 1.8;
     }
-    .sidebar a {
-      color: white;
+    /* 1.2.3 항목 */
+    .sidebar b a {
+      color: #FF0051;
       text-decoration: none;
+      font-family: 'STIX Two Text', Helvetica, sans-serif;
     }
-    .sidebar a:hover { text-decoration: underline; }
+    .sidebar b a:hover { text-decoration: underline; }
+
+    /* INSTAGRAM, X, MAIL 링크 */
+    .sidebar p a.special-link {
+      color: #787878;
+      font-style: italic;
+      text-decoration: none;
+      font-family: 'STIX Two Text', Helvetica, sans-serif;
+    }
+    .sidebar p a.special-link:hover { text-decoration: underline; }
+
     .content {
-      width: 70%;
+      width: 90%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
-      padding: 100px;
+      padding: 75px;
     }
     .content img {
       width: 100%;
@@ -38,16 +53,16 @@
 </head>
 <body>
   <div class="sidebar">
-    <h3>heartmore99pct</h3>
+    <h3>Heartmore99%</h3>
     <p>
       <b><a href="#">1.</a></b><br>
       <b><a href="#">2.</a></b><br>
       <b><a href="#">3.</a></b>
     </p>
     <p>
-      <a href="#">INSTAGRAM</a><br>
-      <a href="#">X</a><br>
-      <a href="#">MAIL</a>
+      <a href="#" class="special-link">INSTAGRAM</a><br>
+      <a href="#" class="special-link">X</a><br>
+      <a href="#" class="special-link">MAIL</a>
     </p>
   </div>
   <div class="content">
@@ -66,4 +81,18 @@
       overlay.style.left = 0;
       overlay.style.width = '100vw';
       overlay.style.height = '100vh';
-      overlay.style.backgr
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.onclick = () => document.body.removeChild(overlay);
+      const bigImg = document.createElement('img');
+      bigImg.src = img.src;
+      bigImg.style.maxWidth = '80vw';
+      bigImg.style.maxHeight = '80vh';
+      overlay.appendChild(bigImg);
+      document.body.appendChild(overlay);
+    }
+  </script>
+</body>
+</html>
