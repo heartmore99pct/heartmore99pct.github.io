@@ -66,12 +66,28 @@
       top: 90%;
       left: 0px;
       transform: translateY(-50%);
-      background-color: rgba(255, 255, 255, 0.5); /* 반투명 */
+      background-color: rgba(255, 255, 255, 0.5);
       color: #FF0051;
       border: none;
       padding: 10px 4.5px;
       font-size: 18px;
       border-radius: 0%;
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    /* 모바일 BGM 버튼 */
+    .bgm-btn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(255,255,255,0.7);
+      color: #FF0051;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
       z-index: 1000;
       cursor: pointer;
     }
@@ -99,8 +115,12 @@
         display: block;
       }
 
+      .bgm-btn {
+        display: block;
+      }
+
       .sidebar {
-        width: 50%; /* 모바일 시 폭 50% */
+        width: 50%;
         position: fixed;
         top: 0;
         left: 0;
@@ -132,6 +152,9 @@
   <!-- 모바일 메뉴 버튼 -->
   <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()"> ♪</button>
 
+  <!-- 모바일 BGM 버튼 -->
+  <button class="bgm-btn" id="bgmBtn" onclick="toggleBGM()">🎵 BGM</button>
+
   <!-- 사이드바 -->
   <div class="sidebar" id="sidebar">
     <h3>Heartmore99%</h3>
@@ -160,14 +183,19 @@
     <img src="image5.jpg" onclick="enlarge(this)">
   </div>
 
+  <!-- BGM -->
+  <audio id="bgm" autoplay loop>
+    <source src="새 폴더 (4)/audio_4a6be7e49b.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
+    // 사이드바 토글
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      const toggleBtn = document.getElementById('toggleBtn');
       sidebar.classList.toggle('active');
-      toggleBtn.innerHTML = sidebar.classList.contains('active') ? ' ♪' : ' ♪'; // < / >
     }
 
+    // 이미지 확대
     function enlarge(img) {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
@@ -193,12 +221,16 @@
 
       document.body.appendChild(overlay);
     }
+
+    // 모바일 BGM 버튼 재생/정지
+    function toggleBGM() {
+      const bgm = document.getElementById('bgm');
+      if (bgm.paused) {
+        bgm.play();
+      } else {
+        bgm.pause();
+      }
+    }
   </script>
-
-<audio autoplay loop>
-  <source src="새 폴더 (4)/audio_4a6be7e49b.mp3" type="audio/mpeg">
-</audio>
-
-</body>
 </body>
 </html>
