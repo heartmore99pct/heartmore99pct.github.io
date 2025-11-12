@@ -12,7 +12,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden; /* ✅ 가로 스크롤 방지 */
+      overflow-x: hidden;
       font-family: 'STIX Two Text', Helvetica, sans-serif;
       background-color: #FFAEC9;
       display: flex;
@@ -63,15 +63,17 @@
     .toggle-btn {
       display: none;
       position: fixed;
-      top: 21px;
-      left: 21px;
-      background-color: white;
+      top: 50%;
+      left: 0px;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.5); /* 반투명 */
       color: #FF0051;
       border: none;
-      padding: 5px 10px;
-      font-size: 13px;
-      border-radius: 0px;
+      padding: 15px 4.5px;
+      font-size: 18px;
+      border-radius: 0%;
       z-index: 1000;
+      cursor: pointer;
     }
 
     .mobile-header {
@@ -98,7 +100,7 @@
       }
 
       .sidebar {
-        width: 50%; /* ✅ 사이드바 폭 50%로 */
+        width: 50%; /* 모바일 시 폭 50% */
         position: fixed;
         top: 0;
         left: 0;
@@ -128,7 +130,7 @@
 </head>
 <body>
   <!-- 모바일 메뉴 버튼 -->
-  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+  <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">♥</button>
 
   <!-- 사이드바 -->
   <div class="sidebar" id="sidebar">
@@ -160,7 +162,10 @@
 
   <script>
     function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('active');
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.getElementById('toggleBtn');
+      sidebar.classList.toggle('active');
+      toggleBtn.innerHTML = sidebar.classList.contains('active') ? '♥' : '♥'; // < / >
     }
 
     function enlarge(img) {
