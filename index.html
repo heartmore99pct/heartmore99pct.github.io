@@ -3,26 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Heartmore99Percent</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden; /* ✅ 가로 스크롤 방지 */
       font-family: 'STIX Two Text', Helvetica, sans-serif;
       background-color: #FFAEC9;
       display: flex;
+      flex-wrap: nowrap;
     }
 
     /* 사이드바 */
     .sidebar {
       width: 20%;
-      padding: 50px 80px 80px 80px;
+      padding: 50px 60px;
       color: white;
       font-size: 14px;
       line-height: 1.8;
-      /* background-color 제거 */
       transition: transform 0.3s ease;
+      box-sizing: border-box;
     }
 
     .sidebar b a {
@@ -45,25 +50,27 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
+      box-sizing: border-box;
     }
+
     .content img {
       width: 100%;
       cursor: pointer;
       border-radius: 0;
     }
 
-    /* 모바일 전용 */
+    /* 모바일 메뉴 버튼 */
     .toggle-btn {
       display: none;
       position: fixed;
-      top: 10px;
-      left: 10px;
+      top: 21px;
+      left: 21px;
       background-color: white;
-      color: pink;
+      color: #FF0051;
       border: none;
-      padding: 10px 15px;
-      font-size: 16px;
-      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 13px;
+      border-radius: 0px;
       z-index: 1000;
     }
 
@@ -73,6 +80,7 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
     .mobile-header img {
       width: 60px;
       margin-top: 10px;
@@ -90,15 +98,15 @@
       }
 
       .sidebar {
-        width: 70%;
+        width: 50%; /* ✅ 사이드바 폭 50%로 */
         position: fixed;
         top: 0;
         left: 0;
         height: 100vh;
-        padding: 50px 20px;
+        padding: 40px 25px;
         transform: translateX(-100%);
         z-index: 999;
-        background-color: rgba(0,0,0,0.95); /* 모바일은 기존 색 유지 */
+        background-color: rgba(0,0,0,0.95);
       }
 
       .sidebar.active {
@@ -109,7 +117,6 @@
         width: 100%;
         padding: 20px;
         grid-template-columns: 1fr;
-        gap: 15px;
       }
 
       .mobile-header {
@@ -121,7 +128,7 @@
 </head>
 <body>
   <!-- 모바일 메뉴 버튼 -->
-  <button class="toggle-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
   <!-- 사이드바 -->
   <div class="sidebar" id="sidebar">
@@ -140,12 +147,10 @@
 
   <!-- 콘텐츠 -->
   <div class="content">
-    <!-- 모바일 상단용 헤더 -->
     <div class="mobile-header">
       <h3>Heartmore99%</h3>
     </div>
 
-    <!-- 이미지 갤러리 -->
     <img src="새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg" onclick="enlarge(this)">
     <img src="새 폴더 (4)/5acd0cc2f1174921b9b3fb78de4d26ab~tplv-wopfjsm1ax-aigc_resize_4096_4096.webp" onclick="enlarge(this)">
     <img src="image3.jpg" onclick="enlarge(this)">
@@ -169,12 +174,18 @@
       overlay.style.display = 'flex';
       overlay.style.justifyContent = 'center';
       overlay.style.alignItems = 'center';
-      overlay.onclick = () => document.body.removeChild(overlay);
+      overlay.style.zIndex = 9999;
+
       const bigImg = document.createElement('img');
       bigImg.src = img.src;
-      bigImg.style.maxWidth = '80vw';
-      bigImg.style.maxHeight = '80vh';
+      bigImg.style.maxWidth = '90vw';
+      bigImg.style.maxHeight = '90vh';
+      bigImg.style.borderRadius = '0';
+      bigImg.style.objectFit = 'contain';
+
       overlay.appendChild(bigImg);
+      overlay.onclick = () => overlay.remove();
+
       document.body.appendChild(overlay);
     }
   </script>
