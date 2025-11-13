@@ -7,7 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
-    /* 전체 페이지 기본 커서 */
+    /* 기존 스타일 그대로 */
     body {
       margin: 0;
       padding: 0;
@@ -18,17 +18,13 @@
       background-color: #FE8AFF;
       display: flex;
       flex-wrap: nowrap;
-
-      /* 기본 커서 적용 */
       cursor: url('새 폴더 (4)/Blue Normal.cur') 0 0, auto;
     }
 
-    /* 포인터가 뜨는 곳(링크, 버튼 등)만 커스텀 포인터 적용 */
     a, button, input, label, .toggle-btn, .bgm-btn {
       cursor: url('새 폴더 (4)/Blue Link.cur') 0 0, pointer;
     }
 
-    /* 사이드바 */
     .sidebar {
       width: 10%;
       padding: 80px 150px;
@@ -52,7 +48,6 @@
     }
     .sidebar p a.special-link:hover { text-decoration: underline; }
 
-    /* 콘텐츠 영역 */
     .content {
       width: 100%;
       padding: 105px 150px;
@@ -67,7 +62,6 @@
       border-radius: 0;
     }
 
-    /* 토글 버튼 */
     .toggle-btn {
       display: none;
       position: fixed;
@@ -83,14 +77,13 @@
       z-index: 1000;
     }
 
-    /* BGM 버튼 */
     .bgm-btn {
       display: block;
       position: fixed;
       top: 9px;
       right: 18px;
       background-color: rgba(255, 255, 255, 0);
-      color: black;
+      color: #2b2b2b;
       border: 0px solid #FF0051;
       padding: 10px 15px;
       font-size: 17px;
@@ -112,7 +105,6 @@
       border-radius: 50%;
     }
 
-    /* 모바일 레이아웃 */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
@@ -155,16 +147,27 @@
         color: white;
       }
     }
+
+    /* ============================= */
+    /* 이미지 드래그 + 텍스트 선택 방지 */
+    img, body, a, p, h3 {
+      -webkit-user-drag: none;     
+      -khtml-user-drag: none;      
+      -moz-user-drag: none;        
+      -o-user-drag: none;          
+      user-drag: none;             
+      user-select: none;           
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    /* ============================= */
   </style>
 </head>
 <body>
-  <!-- 모바일 메뉴 버튼 -->
   <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">װ</button>
-
-  <!-- BGM 버튼 -->
   <button class="bgm-btn" id="bgmBtn" onclick="toggleBGM()">♬</button>
 
-  <!-- 사이드바 -->
   <div class="sidebar" id="sidebar">
     <h3>Heartmore99%</h3>
     <p>
@@ -179,7 +182,6 @@
     </p>
   </div>
 
-  <!-- 콘텐츠 -->
   <div class="content">
     <div class="mobile-header">
       <h3>Heartmore99%</h3>
@@ -192,7 +194,6 @@
     <img src="image5.jpg" onclick="enlarge(this)">
   </div>
 
-  <!-- BGM -->
   <audio id="bgm" loop>
     <source src="새 폴더 (4)/audio.mp3" type="audio/mpeg">
   </audio>
@@ -249,6 +250,16 @@
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
     });
+
+    // ==============================
+    // 드래그 및 선택 방지 JS
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+    });
+    document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+    });
+    // ==============================
   </script>
 </body>
 </html>
