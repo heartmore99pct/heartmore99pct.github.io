@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,8 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
-    html, body {
+    /* 전체 페이지 기본 커서 */
+    body {
       margin: 0;
       padding: 0;
       width: 100%;
@@ -17,6 +18,14 @@
       background-color: #FE8AFF;
       display: flex;
       flex-wrap: nowrap;
+
+      /* 기본 커서 적용 */
+      cursor: url('새 폴더 (4)/Blue Normal.cur') 0 0, auto;
+    }
+
+    /* 포인터가 뜨는 곳(링크, 버튼 등)만 커스텀 포인터 적용 */
+    a, button, input, label, .toggle-btn, .bgm-btn {
+      cursor: url('새 폴더 (4)/Blue Link.cur') 0 0, pointer;
     }
 
     /* 사이드바 */
@@ -55,7 +64,6 @@
 
     .content img {
       width: 100%;
-      cursor: pointer;
       border-radius: 0;
     }
 
@@ -73,14 +81,13 @@
       font-size: 18px;
       border-radius: 0%;
       z-index: 1000;
-      cursor: pointer;
     }
 
-    /* BGM 버튼 스타일 */
+    /* BGM 버튼 */
     .bgm-btn {
       display: block;
       position: fixed;
-      top: 9px; /* PC 오른쪽 위 */
+      top: 9px;
       right: 18px;
       background-color: rgba(255, 255, 255, 0);
       color: black;
@@ -89,7 +96,6 @@
       font-size: 17px;
       border-radius: 0px;
       z-index: 1000;
-      cursor: pointer;
       box-shadow: 0 0px 0px rgba(0,0,0,0.3);
     }
 
@@ -117,10 +123,9 @@
       }
 
       .bgm-btn {
-        top: auto;       /* 위쪽 위치 해제 */
-        bottom: 4px;    /* 모바일 오른쪽 아래 */
+        top: auto;
+        bottom: 4px;
         right: 360px;
-
       }
 
       .sidebar {
@@ -193,13 +198,11 @@
   </audio>
 
   <script>
-    // 사이드바 토글
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
     }
 
-    // 이미지 확대
     function enlarge(img) {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
@@ -226,7 +229,6 @@
       document.body.appendChild(overlay);
     }
 
-    // BGM 버튼 재생/정지
     function toggleBGM() {
       const bgm = document.getElementById('bgm');
       if (bgm.paused) {
@@ -236,7 +238,6 @@
       }
     }
 
-    // 페이지 열리자마자 PC에서 자동재생 시도 (일부 브라우저 제한 있음)
     window.addEventListener('DOMContentLoaded', () => {
       const bgm = document.getElementById('bgm');
       bgm.play().catch(() => {
