@@ -244,6 +244,11 @@
         console.log('자동재생 불가, 버튼으로 재생 가능');
       });
     });
+
+    // 오른쪽 클릭 금지
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
   </script>
 </body>
 </html>
