@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Heartmore99Percent</title>
+  <link rel="icon" href="새 폴더 (4)/ico.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
@@ -80,7 +81,7 @@
       display: block;
       position: fixed;
       top: 9px;
-      right: 18px;
+      right: 8px;
       background-color: rgba(255, 255, 255, 0);
       color: #2b2b2b;
       border: 0px solid #FF0051;
@@ -153,8 +154,6 @@
       user-select: none;
     }
 
-    /* ============================== */
-    /* ⬇⬇⬇ 추가: 모바일 오버레이 */
     @media (max-width: 768px) {
       #mobileSidebarOverlay {
         position: fixed;
@@ -167,7 +166,6 @@
         display: none;
       }
     }
-    /* ============================== */
   </style>
 </head>
 <body>
@@ -192,22 +190,16 @@
     <div class="mobile-header">
       <h3>Heartmore99%</h3>
     </div>
-    <!-- 이미지는 JS로 로드 -->
   </div>
 
   <audio id="bgm" loop>
     <source src="새 폴더 (4)/audio.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- ============================== -->
-  <!-- ⬇⬇⬇ 추가: 모바일 오버레이 -->
   <div id="mobileSidebarOverlay"></div>
-  <!-- ============================== -->
 
   <script>
-    // ============================
-    // 기존 사이드바/이미지/오버레이 기능
-    // ============================
+    // 기존 기능
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
@@ -240,18 +232,12 @@
 
     function toggleBGM() {
       const bgm = document.getElementById('bgm');
-      if (bgm.paused) {
-        bgm.play();
-      } else {
-        bgm.pause();
-      }
+      if (bgm.paused) { bgm.play(); } else { bgm.pause(); }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       const bgm = document.getElementById('bgm');
-      bgm.play().catch(() => {
-        console.log('자동재생 불가, 버튼으로 재생 가능');
-      });
+      bgm.play().catch(() => { console.log('자동재생 불가, 버튼으로 재생 가능'); });
     });
 
     document.addEventListener('contextmenu', e => e.preventDefault());
@@ -260,71 +246,50 @@
 
     const mobileOverlay = document.getElementById('mobileSidebarOverlay');
     const sidebar = document.getElementById('sidebar');
-
     setInterval(() => {
       const isMobile = window.innerWidth <= 768;
       const open = sidebar.classList.contains('active');
-
-      if (isMobile && open) {
-        mobileOverlay.style.display = 'block';
-      } else {
-        mobileOverlay.style.display = 'none';
-      }
+      mobileOverlay.style.display = (isMobile && open) ? 'block' : 'none';
     }, 100);
-
     mobileOverlay.addEventListener('click', () => {
       sidebar.classList.remove('active');
       mobileOverlay.style.display = 'none';
     });
 
-    // ============================
-    // ⬇⬇⬇ 추가: 이미지 세트 교체 기능
-    // ============================
+    // 이미지 세트
     const imageSets = {
       1: [
         "새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg",
-        "새 폴더 (4)/7d3bf173-96be-48a6-bbe4-4ab86349c73b.png",
+        "새 폴더 (4)/5acd0cc2f1174921b9b3fb78de4d26ab~tplv-wopfjsm1ax-aigc_resize_4096_4096.webp",
         "image3.jpg",
         "image4.jpg"
       ],
-      2: [
-        "새 폴더 (4)/7d3bf173-96be-48a6-bbe4-4ab86349c73b.png",
-        "imageB.jpg",
-        "imageC.jpg"
-      ],
-      3: [
-        "새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg",
-        "photo2.png",
-        "photo3.png",
-        "photo4.png"
-      ]
+      2: ["imageA.jpg","imageB.jpg","imageC.jpg"],
+      3: ["photo1.png","photo2.png","photo3.png","photo4.png"]
     };
 
     function loadImages(setNumber) {
       const content = document.querySelector(".content");
-
-      // 기존 이미지 제거
       const oldImages = content.querySelectorAll("img");
-      oldImages.forEach(i => i.remove());
+      oldImages.forEach(i => i.remove()); // 기존 이미지 제거
 
-      // 새 이미지 추가
       imageSets[setNumber].forEach(src => {
         const img = document.createElement("img");
         img.src = src;
-        img.onclick = () => enlarge(img);
+        img.onclick = () => enlarge(img); // 확대 기능 유지
         content.appendChild(img);
       });
     }
 
-    // 페이지 로드 시 1번 세트 자동 표시
     window.addEventListener("DOMContentLoaded", () => {
-      loadImages(1);
+      loadImages(1); // 기본 1번 세트 표시
     });
 
-    // 사이드바 1,2,3 링크 클릭 시 이미지 세트 변경
-    document.querySelectorAll(".sidebar a").forEach((link, index) => {
+    // 1,2,3 클릭 시 이미지 교체
+    const links = document.querySelectorAll(".sidebar p b a");
+    links.forEach((link,index) => {
       link.addEventListener("click", (e) => {
-        e.preventDefault();
+        e.preventDefault(); // 링크 이동 방지
         loadImages(index + 1);
       });
     });
