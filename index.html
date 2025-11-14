@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -192,12 +192,7 @@
     <div class="mobile-header">
       <h3>Heartmore99%</h3>
     </div>
-
-    <img src="새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg" onclick="enlarge(this)">
-    <img src="새 폴더 (4)/5acd0cc2f1174921b9b3fb78de4d26ab~tplv-wopfjsm1ax-aigc_resize_4096_4096.webp" onclick="enlarge(this)">
-    <img src="image3.jpg" onclick="enlarge(this)">
-    <img src="image4.jpg" onclick="enlarge(this)">
-    <img src="image5.jpg" onclick="enlarge(this)">
+    <!-- 이미지는 JS로 로드 -->
   </div>
 
   <audio id="bgm" loop>
@@ -210,6 +205,9 @@
   <!-- ============================== -->
 
   <script>
+    // ============================
+    // 기존 사이드바/이미지/오버레이 기능
+    // ============================
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
@@ -260,8 +258,6 @@
     document.addEventListener('dragstart', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
 
-    /* ============================== */
-    /* ⬇⬇⬇ 추가: 모바일 전용 사이드바 오버레이 기능 */
     const mobileOverlay = document.getElementById('mobileSidebarOverlay');
     const sidebar = document.getElementById('sidebar');
 
@@ -280,7 +276,58 @@
       sidebar.classList.remove('active');
       mobileOverlay.style.display = 'none';
     });
-    /* ============================== */
+
+    // ============================
+    // ⬇⬇⬇ 추가: 이미지 세트 교체 기능
+    // ============================
+    const imageSets = {
+      1: [
+        "새 폴더 (4)/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg",
+        "새 폴더 (4)/5acd0cc2f1174921b9b3fb78de4d26ab~tplv-wopfjsm1ax-aigc_resize_4096_4096.webp",
+        "image3.jpg",
+        "image4.jpg"
+      ],
+      2: [
+        "새 폴더 (4)/ff.png",
+        "imageB.jpg",
+        "imageC.jpg"
+      ],
+      3: [
+        "새 폴더 (4)/fm.png",
+        "photo2.png",
+        "photo3.png",
+        "photo4.png"
+      ]
+    };
+
+    function loadImages(setNumber) {
+      const content = document.querySelector(".content");
+
+      // 기존 이미지 제거
+      const oldImages = content.querySelectorAll("img");
+      oldImages.forEach(i => i.remove());
+
+      // 새 이미지 추가
+      imageSets[setNumber].forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.onclick = () => enlarge(img);
+        content.appendChild(img);
+      });
+    }
+
+    // 페이지 로드 시 1번 세트 자동 표시
+    window.addEventListener("DOMContentLoaded", () => {
+      loadImages(1);
+    });
+
+    // 사이드바 1,2,3 링크 클릭 시 이미지 세트 변경
+    document.querySelectorAll(".sidebar a").forEach((link, index) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        loadImages(index + 1);
+      });
+    });
   </script>
 </body>
 </html>
