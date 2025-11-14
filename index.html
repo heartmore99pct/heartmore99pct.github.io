@@ -3,16 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Heartmore99Percent</title>
-
-  <!-- 🔹 파비콘 추가 -->
-  <link rel="icon" type="image/x-icon" href="새 폴더 (4)/ico.ico">
-  <!-- 🔹 여기까지 -->
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
-    /* 기존 스타일 그대로 */
     body {
       margin: 0;
       padding: 0;
@@ -153,20 +147,27 @@
       }
     }
 
-    /* ============================= */
-    /* 이미지 드래그 + 텍스트 선택 방지 */
+    /* 드래그 + 선택 방지 */
     img, body, a, p, h3 {
-      -webkit-user-drag: none;     
-      -khtml-user-drag: none;      
-      -moz-user-drag: none;        
-      -o-user-drag: none;          
-      user-drag: none;             
-      user-select: none;           
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
+      -webkit-user-drag: none;
+      user-select: none;
     }
-    /* ============================= */
+
+    /* ============================== */
+    /* ⬇⬇⬇ 추가: 모바일 오버레이 */
+    @media (max-width: 768px) {
+      #mobileSidebarOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0);
+        z-index: 998;
+        display: none;
+      }
+    }
+    /* ============================== */
   </style>
 </head>
 <body>
@@ -203,6 +204,11 @@
     <source src="새 폴더 (4)/audio.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- ============================== -->
+  <!-- ⬇⬇⬇ 추가: 모바일 오버레이 -->
+  <div id="mobileSidebarOverlay"></div>
+  <!-- ============================== -->
+
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
@@ -226,7 +232,6 @@
       bigImg.src = img.src;
       bigImg.style.maxWidth = '90vw';
       bigImg.style.maxHeight = '90vh';
-      bigImg.style.borderRadius = '0';
       bigImg.style.objectFit = 'contain';
 
       overlay.appendChild(bigImg);
@@ -251,20 +256,31 @@
       });
     });
 
-    // 오른쪽 클릭 금지
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-    });
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
 
-    // ==============================
-    // 드래그 및 선택 방지 JS
-    document.addEventListener('dragstart', function(e) {
-      e.preventDefault();
+    /* ============================== */
+    /* ⬇⬇⬇ 추가: 모바일 전용 사이드바 오버레이 기능 */
+    const mobileOverlay = document.getElementById('mobileSidebarOverlay');
+    const sidebar = document.getElementById('sidebar');
+
+    setInterval(() => {
+      const isMobile = window.innerWidth <= 768;
+      const open = sidebar.classList.contains('active');
+
+      if (isMobile && open) {
+        mobileOverlay.style.display = 'block';
+      } else {
+        mobileOverlay.style.display = 'none';
+      }
+    }, 100);
+
+    mobileOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      mobileOverlay.style.display = 'none';
     });
-    document.addEventListener('selectstart', function(e) {
-      e.preventDefault();
-    });
-    // ==============================
+    /* ============================== */
   </script>
 </body>
-</html> 
+</html>
