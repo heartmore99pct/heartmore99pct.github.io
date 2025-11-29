@@ -57,7 +57,6 @@
       box-sizing: border-box;
     }
     
-    /* ❗ 왼쪽 열과 오른쪽 열 컨테이너를 통합하여 정의 */
     .left-column, .right-column {
         display: flex;
         flex-direction: column;
@@ -147,12 +146,10 @@
       .content {
         width: 100%;
         padding: 20px;
-        /* 모바일에서는 1열이므로 grid-template-columns: 1fr; 유지 */
         grid-template-columns: 1fr; 
         gap: 15px; 
       }
       
-      /* 모바일에서는 두 컬럼이 세로로 쌓임 */
       .left-column, .right-column {
           width: 100%;
           gap: 15px;
@@ -164,7 +161,6 @@
       }
     }
 
-    /* 드래그 + 선택 방지 */
     img, body, a, p, h3 {
       -webkit-user-drag: none;
       user-select: none;
@@ -181,6 +177,19 @@
         z-index: 998;
         display: none;
       }
+    }
+
+    /* 🔒 이미지 저장 방지용 오버레이 */
+    .no-touch-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .no-touch-overlay {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      pointer-events: auto;
     }
   </style>
 </head>
@@ -215,7 +224,6 @@
   <div id="mobileSidebarOverlay"></div>
 
   <script>
-    // 기존 기능
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
@@ -253,7 +261,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const bgm = document.getElementById('bgm');
-      bgm.play().catch(() => { console.log('자동재생 불가, 버튼으로 재생 가능'); });
+      bgm.play().catch(() => {});
     });
 
     document.addEventListener('contextmenu', e => e.preventDefault());
@@ -272,74 +280,83 @@
       mobileOverlay.style.display = 'none';
     });
 
-    // ❗ 이미지 세트: 새 이미지 2개 (예시)
+    /* 이미지 세트 */
     const imageSets = {
       1: [
-        "portfolio/1c/소라.png",   // [0]
-        "portfolio/1c/하트링.png",   // [0]
-        "portfolio/1c/그림자카나리.png", // [1]
-        "portfolio/1c/불장미.png",       // [2]
-        "portfolio/1c/end.png"  // [3] 
+        "portfolio/1c/소라.png",
+        "portfolio/1c/하트링.png",
+        "portfolio/1c/그림자카나리.png",
+        "portfolio/1c/불장미.png",
+        "portfolio/1c/end.png"
       ],
       2: ["portfolio/1c/download.png"],
       3: ["portfolio/1c/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg"]
     };
 
-    // ❗ loadImages 함수: 왼쪽/오른쪽 열에 번갈아 가며 배치되도록 수정
     function loadImages(setNumber) {
       const content = document.querySelector(".content");
-      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-      elementsToRemove.forEach(i => i.remove()); 
+      const removeList = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      removeList.forEach(el => el.remove());
 
       if (setNumber === 1) {
-          
-        // 1. 왼쪽/오른쪽 열 컨테이너 생성
         const leftColumn = document.createElement("div");
         leftColumn.classList.add("left-column");
-        
+
         const rightColumn = document.createElement("div");
         rightColumn.classList.add("right-column");
 
-        // 2. 이미지를 번갈아 가며 각 컬럼에 추가
         imageSets[1].forEach((src, index) => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.onclick = () => enlarge(img);
+          const img = document.createElement("img");
+          img.src = src;
 
-            // index가 짝수(0, 2, 4...)면 왼쪽 열에 배치
-            if (index % 2 === 0) {
-                leftColumn.appendChild(img);
-            } 
-            // index가 홀수(1, 3, 5...)면 오른쪽 열에 배치
-            else {
-                rightColumn.appendChild(img);
-            }
+          if (index % 2 === 0) {
+            leftColumn.appendChild(img);
+          } else {
+            rightColumn.appendChild(img);
+          }
         });
-        
-        // 3. content에 두 컬럼을 추가
+
         content.appendChild(leftColumn);
         content.appendChild(rightColumn);
 
       } else {
-        // 2, 3번 세트일 경우 기존의 로딩 방식 유지
         imageSets[setNumber].forEach(src => {
           const img = document.createElement("img");
           img.src = src;
-          img.onclick = () => enlarge(img);
           content.appendChild(img);
         });
       }
+
+      protectImages();
+    }
+
+    /* 🔒 이미지 저장 방지 기능 */
+    function protectImages() {
+      document.querySelectorAll(".content img").forEach(img => {
+        if (img.parentElement.classList.contains("no-touch-wrapper")) return;
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "no-touch-wrapper";
+
+        const overlay = document.createElement("div");
+        overlay.className = "no-touch-overlay";
+
+        overlay.addEventListener("click", () => enlarge(img));
+
+        img.replaceWith(wrapper);
+        wrapper.appendChild(img);
+        wrapper.appendChild(overlay);
+      });
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      loadImages(1); // 기본 1번 세트 표시
+      loadImages(1);
     });
 
-    // 1,2,3 클릭 시 이미지 교체
     const links = document.querySelectorAll(".sidebar p b a");
     links.forEach((link,index) => {
       link.addEventListener("click", (e) => {
-        e.preventDefault(); // 링크 이동 방지
+        e.preventDefault();
         loadImages(index + 1);
       });
     });
