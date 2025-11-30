@@ -57,7 +57,7 @@
       box-sizing: border-box;
     }
     
-    /* ❗ 왼쪽 열과 오른쪽 열 컨테이너를 통합하여 정의 */
+    /* PC용: 왼쪽/오른쪽 열 스타일 */
     .left-column, .right-column {
         display: flex;
         flex-direction: column;
@@ -113,6 +113,7 @@
       border-radius: 50%;
     }
 
+    /* 모바일 반응형 스타일 */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
@@ -144,18 +145,18 @@
         transform: translateX(0);
       }
 
+      /* 모바일 정렬 수정: Flex와 Order 사용 */
       .content {
         width: 100%;
         padding: 20px;
-        /* 모바일에서는 1열이므로 grid-template-columns: 1fr; 유지 */
-        grid-template-columns: 1fr; 
+        display: flex;          /* Grid 해제 */
+        flex-direction: column; /* 세로 정렬 */
         gap: 15px; 
       }
       
-      /* 모바일에서는 두 컬럼이 세로로 쌓임 */
+      /* 모바일에서 두 열의 경계 제거 (내용물 섞기 위함) */
       .left-column, .right-column {
-          width: 100%;
-          gap: 15px;
+          display: contents; 
       }
 
       .mobile-header {
@@ -215,12 +216,13 @@
   <div id="mobileSidebarOverlay"></div>
 
   <script>
-    // 기존 기능
+    // 사이드바 토글
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('active');
     }
 
+    // 이미지 확대
     function enlarge(img) {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
@@ -246,6 +248,7 @@
       document.body.appendChild(overlay);
     }
 
+    // BGM 토글
     function toggleBGM() {
       const bgm = document.getElementById('bgm');
       if (bgm.paused) { bgm.play(); } else { bgm.pause(); }
@@ -272,7 +275,7 @@
       mobileOverlay.style.display = 'none';
     });
 
-    // ❗ 이미지 세트: 새 이미지 2개 (예시)
+    // ❗ 이미지 세트: 여기에 경로만 계속 추가하시면 됩니다.
     const imageSets = {
       1: [
         "portfolio/1c/별사과.png",    
@@ -287,7 +290,7 @@
       3: ["portfolio/1c/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg"]
     };
 
-    // ❗ loadImages 함수: 왼쪽/오른쪽 열에 번갈아 가며 배치되도록 수정
+    // 이미지 로드 함수
     function loadImages(setNumber) {
       const content = document.querySelector(".content");
       const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
@@ -295,35 +298,33 @@
 
       if (setNumber === 1) {
           
-        // 1. 왼쪽/오른쪽 열 컨테이너 생성
         const leftColumn = document.createElement("div");
         leftColumn.classList.add("left-column");
         
         const rightColumn = document.createElement("div");
         rightColumn.classList.add("right-column");
 
-        // 2. 이미지를 번갈아 가며 각 컬럼에 추가
         imageSets[1].forEach((src, index) => {
             const img = document.createElement("img");
             img.src = src;
             img.onclick = () => enlarge(img);
 
-            // index가 짝수(0, 2, 4...)면 왼쪽 열에 배치
+            // ❗ 모바일 순서 정렬을 위한 핵심 코드
+            img.style.order = index; 
+
+            // PC용 좌우 분배
             if (index % 2 === 0) {
                 leftColumn.appendChild(img);
-            } 
-            // index가 홀수(1, 3, 5...)면 오른쪽 열에 배치
-            else {
+            } else {
                 rightColumn.appendChild(img);
             }
         });
         
-        // 3. content에 두 컬럼을 추가
         content.appendChild(leftColumn);
         content.appendChild(rightColumn);
 
       } else {
-        // 2, 3번 세트일 경우 기존의 로딩 방식 유지
+        // 2, 3번 세트 로직
         imageSets[setNumber].forEach(src => {
           const img = document.createElement("img");
           img.src = src;
@@ -334,14 +335,13 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      loadImages(1); // 기본 1번 세트 표시
+      loadImages(1); 
     });
 
-    // 1,2,3 클릭 시 이미지 교체
     const links = document.querySelectorAll(".sidebar p b a");
     links.forEach((link,index) => {
       link.addEventListener("click", (e) => {
-        e.preventDefault(); // 링크 이동 방지
+        e.preventDefault(); 
         loadImages(index + 1);
       });
     });
