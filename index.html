@@ -317,28 +317,29 @@
       textBox.classList.add("about-text-box");
 
       // ▼▼▼ [여기 아래에 원하는 내용을 적으세요] ▼▼▼
-      textBox.innerHTML = `
-        <h2 style="margin-top:0;">About Me</h2>
-        
-        안녕하세요. Heartmore99Percent입니다.
-        이곳은 저의 작업물을 보관하는 공간입니다.
+  textBox.innerHTML = `
+    <div style="
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      line-height: 1;
+      color: #c40a5d;
+    ">
+      <h2 style="margin-top:0; font-size:26px; font-weight:700;">About Me</h2>
+      
+      안녕하세요. Heartmore99Percent입니다.<br>
+      이곳은 저의 작업물을 보관하는 공간입니다.<br><br>
 
-        저는 순간의 이미지를 현실로 만듭니다.
+      저는 순간의 이미지를 현실로 만듭니다.<br><br>
 
-        머릿속에 떠오른 비정형의 이미지들을
-        가장 감각적인 형태의 현실로 구현해냅니다.
+      머릿속에 떠오른 비정형의 이미지들을<br>
+      가장 감각적인 형태의 현실로 구현해냅니다.<br><br>
 
-        새로운 협업 제안은 언제나 환영합니다.
+      새로운 협업 제안은 언제나 환영합니다.<br><br>
 
-        <br>
-        
-        <b>contact:</b> gatto27@naver.com
-        <b>instagram:</b> @intothestarlight
-        
-        <br><br>
-        자유롭게 줄바꿈을 하거나 내용을 추가하실 수 있습니다.
-        이모지(❤︎)도 사용 가능합니다.
-      `;
+      <b>contact:</b> gatto27@naver.com<br>
+      <b>instagram:</b> @intothestarlight
+    </div>
+  `;
       // ▲▲▲ [내용 끝] ▲▲▲
 
       content.appendChild(textBox);
