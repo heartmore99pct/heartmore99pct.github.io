@@ -70,6 +70,16 @@
       display: block; 
     }
 
+    /* About Me 텍스트 박스 스타일 */
+    .about-text-box {
+        grid-column: 1 / -1; /* PC에서 전체 너비 사용 */
+        color: white;
+        font-size: 18px;
+        line-height: 1.8;
+        white-space: pre-line; /* 줄바꿈 인식 */
+        font-family: 'STIX Two Text', serif;
+    }
+
     .toggle-btn {
       display: none;
       position: fixed;
@@ -197,7 +207,7 @@
       <b><a href="#">3.</a></b>
     </p>
     <p>
-      <a href="#" class="special-link">❤︎</a><br>
+      <a href="#" class="special-link" onclick="loadAbout(event)">About me</a><br>
       <a href="#" class="special-link">❤︎</a><br>
       <a href="#" class="special-link">❤︎</a>
     </p>
@@ -293,6 +303,52 @@
       3: ["portfolio/1c/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg"]
     };
 
+    // 📝 [About Me 내용 로드 함수]
+    function loadAbout(e) {
+      if(e) e.preventDefault(); // 링크 이동 방지
+      
+      const content = document.querySelector(".content");
+      
+      // 기존 이미지/내용 지우기 (모바일 헤더는 남김)
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
+
+      const textBox = document.createElement("div");
+      textBox.classList.add("about-text-box");
+
+      // ▼▼▼ [여기 아래에 원하는 내용을 적으세요] ▼▼▼
+      textBox.innerHTML = `
+        <h2 style="margin-top:0;">About Me</h2>
+        
+        안녕하세요. Heartmore99Percent입니다.
+        이곳은 저의 작업물을 보관하는 공간입니다.
+
+        저는 순간의 이미지를 현실로 만듭니다.
+
+        머릿속에 떠오른 비정형의 이미지들을
+        가장 감각적인 형태의 현실로 구현해냅니다.
+
+        새로운 협업 제안은 언제나 환영합니다.
+
+        <br>
+        
+        <b>contact:</b> gatto27@naver.com
+        <b>instagram:</b> @intothestarlight
+        
+        <br><br>
+        자유롭게 줄바꿈을 하거나 내용을 추가하실 수 있습니다.
+        이모지(❤︎)도 사용 가능합니다.
+      `;
+      // ▲▲▲ [내용 끝] ▲▲▲
+
+      content.appendChild(textBox);
+
+      // 모바일에서 사이드바가 켜져있다면 끄기
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+      }
+    }
+
     // 이미지 로드 함수
     function loadImages(setNumber) {
       const content = document.querySelector(".content");
@@ -311,11 +367,8 @@
             const img = document.createElement("img");
             img.src = src;
             img.onclick = () => enlarge(img);
-
-            // ❗ 모바일 순서 정렬을 위한 핵심 코드
             img.style.order = index; 
 
-            // PC용 좌우 분배
             if (index % 2 === 0) {
                 leftColumn.appendChild(img);
             } else {
@@ -327,13 +380,17 @@
         content.appendChild(rightColumn);
 
       } else {
-        // 2, 3번 세트 로직
         imageSets[setNumber].forEach(src => {
           const img = document.createElement("img");
           img.src = src;
           img.onclick = () => enlarge(img);
           content.appendChild(img);
         });
+      }
+
+      // 모바일에서 사이드바 닫기
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
       }
     }
 
