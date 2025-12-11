@@ -5,6 +5,7 @@
   <title>Heartmore99Percent</title>
   <link rel="icon" href="main/ico.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
@@ -21,7 +22,7 @@
       cursor: url('main/Blue Normal.cur') 0 0, auto;
     }
 
-    a, button, input, label, .toggle-btn, .bgm-btn, .writing-title {
+    a, button, input, label, .toggle-btn, .bgm-btn, .writing-title, .back-btn {
       cursor: url('main/Blue Link.cur') 0 0, pointer;
     }
 
@@ -41,11 +42,11 @@
     }
     .sidebar b a:hover { text-decoration: underline; }
 
-    /* 3번 링크 스타일 (기존 span 유지) */
+    /* 3번 링크 스타일 */
     .sidebar span a {
-        color: #FF0051; /* 1, 2번과 동일하게 맞춤, 원하시면 변경 가능 */
+        color: #FF0051; 
         text-decoration: none;
-        font-weight: bold; /* 1, 2번처럼 굵게 */
+        font-weight: bold;
     }
     .sidebar span a:hover { text-decoration: underline; }
 
@@ -89,16 +90,15 @@
     }
 
     /* =========================================
-       [추가됨] Writing(글 목록) 스타일
-       참고 사이트 느낌으로 구현
+       [Writing(글 목록) 스타일]
        ========================================= */
     .writing-list {
-        grid-column: 1 / -1; /* 전체 너비 */
+        grid-column: 1 / -1; 
         width: 100%;
-        max-width: 800px;    /* 너무 넓지 않게 */
+        max-width: 800px;
         display: flex;
         flex-direction: column;
-        gap: 50px;           /* 글 사이 간격 */
+        gap: 50px;
         color: white;
     }
 
@@ -113,7 +113,7 @@
 
     .writing-meta {
         font-size: 14px;
-        color: #FF0051; /* 날짜 색상 */
+        color: #FF0051; 
         margin-bottom: 8px;
         font-family: 'STIX Two Text', serif;
         font-style: italic;
@@ -135,10 +135,37 @@
     .writing-excerpt {
         font-size: 16px;
         line-height: 1.6;
-        color: #fce4ec; /* 살짝 연한 핑크빛 흰색 */
+        color: #fce4ec; 
         margin: 0;
-        font-family: sans-serif; /* 본문은 가독성 좋게 */
+        font-family: sans-serif; 
     }
+    /* ========================================= */
+    
+    /* =========================================
+       [마크다운 본문 스타일]
+       ========================================= */
+    .markdown-body {
+        grid-column: 1 / -1;
+        width: 100%;
+        max-width: 800px;
+        color: white;
+        font-family: 'STIX Two Text', serif;
+        line-height: 1.8;
+    }
+    .markdown-body h1 { font-size: 2.5em; border-bottom: 1px solid #555; padding-bottom: 10px; }
+    .markdown-body h2 { font-size: 2em; margin-top: 30px; }
+    .markdown-body p { margin-bottom: 20px; font-size: 1.1em; }
+    .markdown-body blockquote { border-left: 4px solid #FF0051; padding-left: 15px; color: #ccc; }
+    .markdown-body img { max-width: 100%; }
+    
+    .back-btn {
+        margin-bottom: 20px;
+        color: #FF0051;
+        font-size: 16px;
+        cursor: pointer;
+        display: inline-block;
+    }
+    .back-btn:hover { text-decoration: underline; }
     /* ========================================= */
 
     .toggle-btn {
@@ -364,50 +391,95 @@
       ]
     };
 
-    // 📝 [Writing 데이터] - 여기에 글 목록을 추가하세요
+    // 📝 [3. Writing 데이터 목록]
+    // path: 'post/파일명.md' 형식으로 적어주세요.
     const writingData = [
       {
-        title: "Writing Log 01",
+        title: "첫 번째 기록 (p1.md)",
         date: "2024-05-20",
-        desc: "이곳은 텍스트를 기록하는 공간입니다. 참고하신 사이트처럼 목록 형태로 보여집니다.",
-        link: "#"
+        desc: "마크다운 파일 p1.md의 내용을 불러와 보여줍니다.",
+        path: "post/p1.md" // ❗ 파일 경로 지정
       },
       {
-        title: "여름의 조각들",
+        title: "두 번째 기록",
         date: "2024-06-01",
-        desc: "무더운 여름날의 기억들을 모아두었습니다. 투명한 유리구슬처럼 반짝이는 순간들.",
-        link: "#"
-      },
-      {
-        title: "작업 노트: 다이아몬드",
-        date: "2024-06-15",
-        desc: "다이아몬드 작업 과정에 대한 짧은 메모. 세공 과정에서 느낀 점들을 서술합니다.",
-        link: "#"
+        desc: "이 목록은 수동으로 추가/삭제할 수 있습니다.",
+        path: "post/p2.md" // 임의의 파일 경로
       }
     ];
 
-    // 📝 [3. Writing 로드 함수]
+    // 📝 [MD 파일 읽어서 보여주는 함수]
+    function loadMarkdownPost(filePath) {
+        const content = document.querySelector(".content");
+        
+        // 화면 비우기
+        const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+        elementsToRemove.forEach(i => i.remove());
+
+        const loading = document.createElement("div");
+        loading.style.color = "white";
+        loading.innerText = "Loading...";
+        content.appendChild(loading);
+
+        // md 파일 fetch
+        fetch(filePath)
+            .then(response => {
+                if (!response.ok) throw new Error("파일을 찾을 수 없습니다: " + filePath);
+                return response.text();
+            })
+            .then(text => {
+                loading.remove(); // 로딩 제거
+
+                // 1. 뒤로가기 버튼
+                const backBtn = document.createElement("div");
+                backBtn.className = "back-btn";
+                backBtn.innerHTML = "← 목록으로 돌아가기";
+                backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
+                content.appendChild(backBtn);
+
+                // 2. 마크다운 내용을 HTML로 변환하여 표시
+                const article = document.createElement("div");
+                article.className = "markdown-body";
+                // marked.parse() 함수로 마크다운을 HTML로 변환합니다.
+                article.innerHTML = marked.parse(text); 
+                content.appendChild(article);
+            })
+            .catch(err => {
+                loading.innerText = "글을 불러오는데 실패했습니다. (경로를 확인하세요: " + filePath + ")";
+                console.error(err);
+                
+                // 에러 발생 시 뒤로가기 버튼 추가 (선택 사항)
+                if(!content.querySelector(".back-btn")) {
+                   const backBtn = document.createElement("div");
+                   backBtn.className = "back-btn";
+                   backBtn.innerHTML = "← 목록으로 돌아가기";
+                   backBtn.onclick = () => loadWriting(); 
+                   content.appendChild(backBtn);
+                }
+            });
+    }
+
+    // 📝 [Writing 목록 화면 로드 함수]
     function loadWriting(e) {
       if(e) e.preventDefault(); 
-      
+
       const content = document.querySelector(".content");
       
-      // 기존 내용 제거 (모바일 헤더 유지)
+      // 화면 비우기
       const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
       elementsToRemove.forEach(i => i.remove());
 
-      // 목록 컨테이너
       const listContainer = document.createElement("div");
       listContainer.classList.add("writing-list");
 
-      // 데이터 뿌리기
       writingData.forEach(item => {
         const itemDiv = document.createElement("div");
         itemDiv.classList.add("writing-item");
 
+        // 제목 클릭 시 loadMarkdownPost 함수 실행 (md 경로 전달)
         itemDiv.innerHTML = `
           <div class="writing-meta">${item.date}</div>
-          <div class="writing-title" onclick="alert('${item.title} 읽기 (연결 필요)')">${item.title}</div>
+          <div class="writing-title" onclick="loadMarkdownPost('${item.path}')">${item.title}</div>
           <p class="writing-excerpt">${item.desc}</p>
         `;
         listContainer.appendChild(itemDiv);
@@ -415,7 +487,6 @@
 
       content.appendChild(listContainer);
 
-      // 모바일 사이드바 닫기
       if (window.innerWidth <= 768) {
           sidebar.classList.remove('active');
       }
@@ -464,7 +535,7 @@
       }
     }
 
-    // 이미지 로드 함수
+    // 이미지 로드 함수 (1번, 2번)
     function loadImages(setNumber) {
       const content = document.querySelector(".content");
       const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
@@ -507,11 +578,12 @@
       }
     }
 
+    // 초기 로드 시 1번 이미지 로드
     window.addEventListener("DOMContentLoaded", () => {
       loadImages(1); 
     });
 
-    // 1번, 2번 링크 클릭 이벤트 (b 태그 안에 있는 a만 선택)
+    // 1번, 2번 링크 클릭 이벤트
     const links = document.querySelectorAll(".sidebar p b a");
     links.forEach((link,index) => {
       link.addEventListener("click", (e) => {
