@@ -1,6 +1,18 @@
 ---
 layout: page
-type: writing
+title: Writing
+permalink: /categories/writing/
 ---
 
-{% include archive.html %}
+<h1>Writing 글 모음</h1>
+
+<ul>
+  {% for post in site.categories.writing %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <span style="font-size: small; color: #888;">
+        {{ post.date | date: "%Y-%m-%d" }}
+      </span>
+    </li>
+  {% endfor %}
+</ul>
