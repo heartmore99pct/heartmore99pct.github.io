@@ -21,7 +21,7 @@
       cursor: url('main/Blue Normal.cur') 0 0, auto;
     }
 
-    a, button, input, label, .toggle-btn, .bgm-btn {
+    a, button, input, label, .toggle-btn, .bgm-btn, .writing-title {
       cursor: url('main/Blue Link.cur') 0 0, pointer;
     }
 
@@ -40,6 +40,14 @@
       text-decoration: none;
     }
     .sidebar b a:hover { text-decoration: underline; }
+
+    /* 3번 링크 스타일 (기존 span 유지) */
+    .sidebar span a {
+        color: #FF0051; /* 1, 2번과 동일하게 맞춤, 원하시면 변경 가능 */
+        text-decoration: none;
+        font-weight: bold; /* 1, 2번처럼 굵게 */
+    }
+    .sidebar span a:hover { text-decoration: underline; }
 
     .sidebar p a.special-link {
       color: #004F00;
@@ -72,13 +80,66 @@
 
     /* About Me 텍스트 박스 스타일 */
     .about-text-box {
-        grid-column: 1 / -1; /* PC에서 전체 너비 사용 */
+        grid-column: 1 / -1; 
         color: white;
         font-size: 18px;
         line-height: 1.8;
-        white-space: pre-line; /* 줄바꿈 인식 */
+        white-space: pre-line;
         font-family: 'STIX Two Text', serif;
     }
+
+    /* =========================================
+       [추가됨] Writing(글 목록) 스타일
+       참고 사이트 느낌으로 구현
+       ========================================= */
+    .writing-list {
+        grid-column: 1 / -1; /* 전체 너비 */
+        width: 100%;
+        max-width: 800px;    /* 너무 넓지 않게 */
+        display: flex;
+        flex-direction: column;
+        gap: 50px;           /* 글 사이 간격 */
+        color: white;
+    }
+
+    .writing-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 30px;
+    }
+    
+    .writing-item:last-child {
+        border-bottom: none;
+    }
+
+    .writing-meta {
+        font-size: 14px;
+        color: #FF0051; /* 날짜 색상 */
+        margin-bottom: 8px;
+        font-family: 'STIX Two Text', serif;
+        font-style: italic;
+    }
+
+    .writing-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+        color: white;
+        transition: color 0.2s;
+    }
+    
+    .writing-title:hover {
+        color: #FF0051;
+        text-decoration: underline;
+    }
+
+    .writing-excerpt {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #fce4ec; /* 살짝 연한 핑크빛 흰색 */
+        margin: 0;
+        font-family: sans-serif; /* 본문은 가독성 좋게 */
+    }
+    /* ========================================= */
 
     .toggle-btn {
       display: none;
@@ -155,16 +216,14 @@
         transform: translateX(0);
       }
 
-      /* 모바일 정렬 수정: Flex와 Order 사용 */
       .content {
         width: 100%;
         padding: 20px;
-        display: flex;          /* Grid 해제 */
-        flex-direction: column; /* 세로 정렬 */
+        display: flex;
+        flex-direction: column;
         gap: 15px; 
       }
       
-      /* 모바일에서 두 열의 경계 제거 (내용물 섞기 위함) */
       .left-column, .right-column {
           display: contents; 
       }
@@ -204,7 +263,7 @@
     <p>
       <b><a href="#">1.</a></b><br>
       <b><a href="#">2.</a></b><br>
-      <span><a href="/categories/writing.html">3.</a></span>
+      <span><a href="#" onclick="loadWriting(event)">3.</a></span>
     </p>
     <p>
       <a href="#" class="special-link" onclick="loadAbout(event)">About me</a><br>
@@ -285,7 +344,7 @@
       mobileOverlay.style.display = 'none';
     });
 
-    // ❗ 이미지 세트: 여기에 경로만 계속 추가하시면 됩니다.
+    // ❗ 이미지 세트
     const imageSets = {
       1: [
         "portfolio/1c/고리게임.webp",
@@ -301,52 +360,105 @@
       ],
       2: [
         "portfolio/1c/end.png",
-        "portfolio/1c/end.png"],
-      3: ["portfolio/1c/2a6d9cea-b079-4507-a5f6-64cb016e4e51.jpg"]
+        "portfolio/1c/end.png"
+      ]
     };
 
-    // 📝 [About Me 내용 로드 함수]
-    function loadAbout(e) {
-      if(e) e.preventDefault(); // 링크 이동 방지
+    // 📝 [Writing 데이터] - 여기에 글 목록을 추가하세요
+    const writingData = [
+      {
+        title: "Writing Log 01",
+        date: "2024-05-20",
+        desc: "이곳은 텍스트를 기록하는 공간입니다. 참고하신 사이트처럼 목록 형태로 보여집니다.",
+        link: "#"
+      },
+      {
+        title: "여름의 조각들",
+        date: "2024-06-01",
+        desc: "무더운 여름날의 기억들을 모아두었습니다. 투명한 유리구슬처럼 반짝이는 순간들.",
+        link: "#"
+      },
+      {
+        title: "작업 노트: 다이아몬드",
+        date: "2024-06-15",
+        desc: "다이아몬드 작업 과정에 대한 짧은 메모. 세공 과정에서 느낀 점들을 서술합니다.",
+        link: "#"
+      }
+    ];
+
+    // 📝 [3. Writing 로드 함수]
+    function loadWriting(e) {
+      if(e) e.preventDefault(); 
       
       const content = document.querySelector(".content");
       
-      // 기존 이미지/내용 지우기 (모바일 헤더는 남김)
+      // 기존 내용 제거 (모바일 헤더 유지)
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
+
+      // 목록 컨테이너
+      const listContainer = document.createElement("div");
+      listContainer.classList.add("writing-list");
+
+      // 데이터 뿌리기
+      writingData.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("writing-item");
+
+        itemDiv.innerHTML = `
+          <div class="writing-meta">${item.date}</div>
+          <div class="writing-title" onclick="alert('${item.title} 읽기 (연결 필요)')">${item.title}</div>
+          <p class="writing-excerpt">${item.desc}</p>
+        `;
+        listContainer.appendChild(itemDiv);
+      });
+
+      content.appendChild(listContainer);
+
+      // 모바일 사이드바 닫기
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+      }
+    }
+
+    // 📝 [About Me 내용 로드 함수]
+    function loadAbout(e) {
+      if(e) e.preventDefault(); 
+      
+      const content = document.querySelector(".content");
+      
       const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
       elementsToRemove.forEach(i => i.remove());
 
       const textBox = document.createElement("div");
       textBox.classList.add("about-text-box");
 
-      // ▼▼▼ [여기 아래에 원하는 내용을 적으세요] ▼▼▼
-  textBox.innerHTML = `
-    <div style="
-      font-family: 'Pretendard', sans-serif;
-      font-size: 14px;
-      line-height: 1;
-      color: #9e064a;
-    ">
-      <h2 style="margin-top:0; font-size:19px; font-weight:700;">About Me</h2>
-      
-      안녕하세요. Heartmore99Percent입니다.<br>
-      이곳은 저의 작업물을 보관하는 공간입니다.<br><br>
+      textBox.innerHTML = `
+        <div style="
+          font-family: 'Pretendard', sans-serif;
+          font-size: 14px;
+          line-height: 1;
+          color: #9e064a;
+        ">
+          <h2 style="margin-top:0; font-size:19px; font-weight:700;">About Me</h2>
+          
+          안녕하세요. Heartmore99Percent입니다.<br>
+          이곳은 저의 작업물을 보관하는 공간입니다.<br><br>
 
-      순간의 이미지를 현실로 만듭니다.<br><br>
+          순간의 이미지를 현실로 만듭니다.<br><br>
 
-      머릿속에 떠오른 비정형의 이미지들을 보석을 세공하듯 다듬어<br>
-      가장 감각적인 형태로 구현해냅니다.<br><br>
+          머릿속에 떠오른 비정형의 이미지들을 보석을 세공하듯 다듬어<br>
+          가장 감각적인 형태로 구현해냅니다.<br><br>
 
-      협업 제안은 언제나 환영합니다.<br><br>
+          협업 제안은 언제나 환영합니다.<br><br>
 
-      <b>contact:</b> gatto27@naver.com<br>
-      <b>instagram:</b> @intothestarlight
-    </div>
-  `;
-      // ▲▲▲ [내용 끝] ▲▲▲
+          <b>contact:</b> gatto27@naver.com<br>
+          <b>instagram:</b> @intothestarlight
+        </div>
+      `;
 
       content.appendChild(textBox);
 
-      // 모바일에서 사이드바가 켜져있다면 끄기
       if (window.innerWidth <= 768) {
           sidebar.classList.remove('active');
       }
@@ -359,7 +471,6 @@
       elementsToRemove.forEach(i => i.remove()); 
 
       if (setNumber === 1) {
-          
         const leftColumn = document.createElement("div");
         leftColumn.classList.add("left-column");
         
@@ -382,7 +493,7 @@
         content.appendChild(leftColumn);
         content.appendChild(rightColumn);
 
-      } else {
+      } else if (imageSets[setNumber]) { // 해당 세트가 있을 때만
         imageSets[setNumber].forEach(src => {
           const img = document.createElement("img");
           img.src = src;
@@ -391,7 +502,6 @@
         });
       }
 
-      // 모바일에서 사이드바 닫기
       if (window.innerWidth <= 768) {
           sidebar.classList.remove('active');
       }
@@ -401,6 +511,7 @@
       loadImages(1); 
     });
 
+    // 1번, 2번 링크 클릭 이벤트 (b 태그 안에 있는 a만 선택)
     const links = document.querySelectorAll(".sidebar p b a");
     links.forEach((link,index) => {
       link.addEventListener("click", (e) => {
