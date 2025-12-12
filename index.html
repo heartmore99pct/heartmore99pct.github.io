@@ -161,7 +161,7 @@
         font-family: 'sans-serif', sans-serif !important; /* Pretendard 폰트 적용 */
         font-size: 18px; 
         color: #303030; /* 글자색 변경 */
-        border-bottom: 1px solid #636363; 
+        border-bottom: 1px solid #63636300; 
         padding-bottom: 15px; 
     }
     
@@ -460,7 +460,7 @@
                 // 1. 뒤로가기 버튼
                 const backBtn = document.createElement("div");
                 backBtn.className = "back-btn";
-                backBtn.innerHTML = "← 목록으로 돌아가기";
+                backBtn.innerHTML = "← Back to list";
                 backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
                 content.appendChild(backBtn);
 
