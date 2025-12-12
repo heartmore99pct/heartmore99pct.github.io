@@ -6,6 +6,7 @@
   <link rel="icon" href="main/ico.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
@@ -132,6 +133,7 @@
         text-decoration: underline;
     }
 
+    /* 목록 요약 텍스트 제거에 따라 이 부분은 더 이상 사용되지 않습니다.
     .writing-excerpt {
         font-size: 16px;
         line-height: 1.6;
@@ -139,6 +141,7 @@
         margin: 0;
         font-family: sans-serif; 
     }
+    */
     /* ========================================= */
     
     /* =========================================
@@ -152,9 +155,35 @@
         font-family: 'STIX Two Text', serif;
         line-height: 1.8;
     }
-    .markdown-body h1 { font-size: 2.5em; border-bottom: 1px solid #555; padding-bottom: 10px; }
+
+    /* ❗ 1. '# 고양이' (H1) 스타일 수정 */
+    .markdown-body h1 { 
+        font-family: 'Pretendard', sans-serif !important; /* Pretendard 폰트 적용 */
+        font-size: 3em; 
+        color: #f7a0b5; /* 글자색 변경 */
+        border-bottom: 1px solid #FF0051; 
+        padding-bottom: 15px; 
+    }
+    
     .markdown-body h2 { font-size: 2em; margin-top: 30px; }
-    .markdown-body p { margin-bottom: 20px; font-size: 1.1em; }
+    
+    /* ❗ 2. '야옹' (첫 번째 P) 스타일 수정 */
+    .markdown-body p:first-of-type {
+        font-family: 'Gungsuh', serif; /* 궁서체 적용 (기기에 폰트가 있어야 보입니다) */
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #f2ff83; /* 밝은 노란색 */
+        line-height: 1.2;
+        margin-top: 20px;
+        margin-bottom: 20px; 
+    }
+    
+    /* 마크다운 본문의 나머지 <p> 태그 */
+    .markdown-body p { 
+        margin-bottom: 20px; 
+        font-size: 1.1em; 
+    } 
+
     .markdown-body blockquote { border-left: 4px solid #FF0051; padding-left: 15px; color: #ccc; }
     .markdown-body img { max-width: 100%; }
     
@@ -395,16 +424,14 @@
     // path: 'post/파일명.md' 형식으로 적어주세요.
     const writingData = [
       {
-        title: "첫 번째 기록 (p1.md)",
-        date: "2024-05-20",
-        desc: "마크다운 파일 p1.md의 내용을 불러와 보여줍니다.",
-        path: "posts/p1.md" // ❗ 파일 경로 지정
+        title: "고양이 이야기 (p1.md)",
+        date: "2025-12-12",
+        path: "post/p1.md" // ❗ 'post' 폴더 이름으로 수정
       },
       {
         title: "두 번째 기록",
-        date: "2024-06-01",
-        desc: "이 목록은 수동으로 추가/삭제할 수 있습니다.",
-        path: "post/p2.md" // 임의의 파일 경로
+        date: "2025-12-12",
+        path: "post/another.md" // 다른 파일이 있다면
       }
     ];
 
@@ -480,8 +507,7 @@
         itemDiv.innerHTML = `
           <div class="writing-meta">${item.date}</div>
           <div class="writing-title" onclick="loadMarkdownPost('${item.path}')">${item.title}</div>
-          <p class="writing-excerpt">${item.desc}</p>
-        `;
+          `;
         listContainer.appendChild(itemDiv);
       });
 
