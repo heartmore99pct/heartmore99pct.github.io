@@ -169,12 +169,12 @@
     .markdown-body h2 { font-size: 2em; margin-top: 30px; }
     
     /* ❗ 2. '야옹' (첫 번째 P) 스타일 수정 */
-    .markdown-body p:first-of-type {
-        font-family: 'sans-serif', sans-serif; /* 궁서체 적용 (기기에 폰트가 있어야 보입니다) */
+    .markdown-body p {
+        font-family: 'sans-serif', sans-serif; /* 궁서체 적용 */
         font-size: 14px;
-        font-weight: none;
+        font-weight: normal; /* 'none' 대신 'normal'이나 400 사용 권장 */
         color: #303030; 
-        line-height: 1.6;
+        line-height: 1.2;
         margin-top: 20px;
         margin-bottom: 20px; 
     }
