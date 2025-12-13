@@ -232,6 +232,16 @@
       margin-bottom: 20px;
     }
 
+    .mobile-header a {
+      display: inline-block; /* 박스 크기를 텍스트 길이에 맞춤 */
+    }
+
+    .mobile-header h3 {
+      display: inline-block; /* h3의 꽉 차는 성질 제거 */
+      margin: 0;             /* 불필요한 여백 제거 */
+      padding: 5px;          /* (선택사항) 터치가 너무 힘들지 않게 약간의 안쪽 여백 */
+    }
+
     .mobile-header img {
       width: 60px;
       margin-top: 10px;
@@ -268,6 +278,16 @@
 
       .sidebar.active {
         transform: translateX(0);
+      }
+
+      .sidebar > a {
+        display: inline-block; /* 링크 영역을 글자 크기에 맞춤 */
+      }
+
+      .sidebar h3 {
+        display: inline-block; /* h3의 꽉 차는 성질 제거 */
+        margin: 0;             /* 불필요한 여백 초기화 */
+        margin-bottom: 20px;   /* 제목 아래 간격 유지 (필요에 따라 조절하세요) */
       }
 
       .content {
