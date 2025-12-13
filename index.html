@@ -1,651 +1,624 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Heartmore99Percent</title>
-  <link rel="icon" href="main/ico.ico" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* [기존 폰트: STIX Two Text (기본 body 폰트)] */
-    @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
+  <meta charset="UTF-8">
+  <title>Heartmore99Percent</title>
+  <link rel="icon" href="main/ico.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* [기존 폰트: STIX Two Text (기본 body 폰트)] */
+    @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow-x: hidden;
-      font-family: 'STIX Two Text', Helvetica, sans-serif;
-      background-color: #FE8AFF;
-      display: flex;
-      flex-wrap: nowrap;
-      cursor: url('main/Blue Normal.cur') 0 0, auto;
-    }
-
-    a, button, input, label, .toggle-btn, .bgm-btn, .writing-title, .back-btn {
-      cursor: url('main/Blue Link.cur') 0 0, pointer;
-    }
-
-    .sidebar {
-      width: 10%;
-      padding: 80px 150px;
-      color: white;
-      font-size: 15px;
-      line-height: 1.8;
-      transition: transform 0.3s ease;
-      box-sizing: border-box;
-    }
-    
-    /* Heartmore99% 링크에 대한 스타일 보강 (PC/모바일 공통 적용) */
-    .sidebar a h3,
-    .mobile-header a h3,
-    .sidebar a h3:visited,
-    .mobile-header a h3:visited,
-    .sidebar a h3:hover,
-    .mobile-header a h3:hover {
-        color: white !important; /* 항상 흰색 유지 */
-        text-decoration: none !important; /* 밑줄 없음 유지 */
-        cursor: url('main/Blue Link.cur') 0 0, pointer; /* 커서 유지 */
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'STIX Two Text', Helvetica, sans-serif;
+      background-color: #FE8AFF;
+      display: flex;
+      flex-wrap: nowrap;
+      cursor: url('main/Blue Normal.cur') 0 0, auto;
     }
 
-    .sidebar b a {
-      color: #FF0051;
-      text-decoration: none;
-    }
-    .sidebar b a:hover { text-decoration: underline; }
+    a, button, input, label, .toggle-btn, .bgm-btn, .writing-title, .back-btn {
+      cursor: url('main/Blue Link.cur') 0 0, pointer;
+    }
 
-    /* 3번 링크 스타일 */
-    .sidebar span a {
-      color: #FF0051; 
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .sidebar span a:hover { text-decoration: underline; }
+    .sidebar {
+      width: 10%;
+      padding: 80px 150px;
+      color: white;
+      font-size: 15px;
+      line-height: 1.8;
+      transition: transform 0.3s ease;
+      box-sizing: border-box;
+    }
 
-    .sidebar p a.special-link {
-      color: #004F00;
-      font-style: italic;
-      text-decoration: none;
-    }
-    .sidebar p a.special-link:hover { text-decoration: underline; }
+    .sidebar b a {
+      color: #FF0051;
+      text-decoration: none;
+    }
+    .sidebar b a:hover { text-decoration: underline; }
 
-    .content {
-      width: 100%;
-      padding: 105px 150px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      box-sizing: border-box;
-    }
-    
-    /* PC용: 왼쪽/오른쪽 열 스타일 */
-    .left-column, .right-column {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+    /* 3번 링크 스타일 */
+    .sidebar span a {
+      color: #FF0051; 
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .sidebar span a:hover { text-decoration: underline; }
 
-    .content img {
-      width: 100%;
-      border-radius: 0;
-      display: block; 
-    }
+    .sidebar p a.special-link {
+      color: #004F00;
+      font-style: italic;
+      text-decoration: none;
+    }
+    .sidebar p a.special-link:hover { text-decoration: underline; }
 
-    /* About Me 텍스트 박스 스타일 (기존 폰트 유지) */
-    .about-text-box {
-      grid-column: 1 / -1; 
-      color: white;
-      font-size: 18px;
-      line-height: 1.8;
-      white-space: pre-line;
-      font-family: 'STIX Two Text', serif;
-    }
+    .content {
+      width: 100%;
+      padding: 105px 150px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      box-sizing: border-box;
+    }
+    
+    /* PC용: 왼쪽/오른쪽 열 스타일 */
+    .left-column, .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-    /* =========================================
-      [Writing(글 목록) 스타일] (기존 폰트 유지)
-      ========================================= */
-    .writing-list {
-      grid-column: 1 / -1; 
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      color: white;
-    }
+    .content img {
+      width: 100%;
+      border-radius: 0;
+      display: block; 
+    }
 
-    .writing-item {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-      padding-bottom: 10px; 
-    }
-    
-    .writing-item:last-child {
-      border-bottom: none;
-    }
+    /* About Me 텍스트 박스 스타일 (기존 폰트 유지) */
+    .about-text-box {
+      grid-column: 1 / -1; 
+      color: white;
+      font-size: 18px;
+      line-height: 1.8;
+      white-space: pre-line;
+      font-family: 'STIX Two Text', serif;
+    }
 
-    .writing-meta {
-      font-size: 14px; 
-      font-weight: 100;
-      color: #b700ff; 
-      margin-bottom: 3px;
-      font-family: 'STIX Two Text', serif;
-      font-style: italic;
-    }
+    /* =========================================
+      [Writing(글 목록) 스타일] (기존 폰트 유지)
+      ========================================= */
+    .writing-list {
+      grid-column: 1 / -1; 
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: white;
+    }
 
-    .writing-title {
-      font-size: 15px;
-      font-weight: 450;
-      margin: 0 0 3px 0;
-      color: #303030;
-      transition: color 0.2s;
-    }
-    
-    .writing-title:hover {
-      color: #b700ff; 
-      text-decoration: underline;
-    }
+    .writing-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 10px; 
+    }
+    
+    .writing-item:last-child {
+      border-bottom: none;
+    }
 
-    /* ========================================= */
-    
-    /* =========================================
-      [마크다운 본문 스타일] (Noto Serif KR 적용)
-      ========================================= */
-    .markdown-body {
-      grid-column: 1 / -1;
-      width: 100%;
-      max-width: 600px;
-      color: white;
-      /* ❗ Noto Serif KR 적용 */
-      font-family: 'Noto Serif KR', 'Batang', serif;
-      line-height: 1.8;
-    }
+    .writing-meta {
+      font-size: 14px; 
+      font-weight: 100;
+      color: #b700ff; 
+      margin-bottom: 3px;
+      font-family: 'STIX Two Text', serif;
+      font-style: italic;
+    }
 
-    /* ❗ 1. '# 고양이' (H1) 스타일 수정 */
-    .markdown-body h1 { 
-      /* ❗ Noto Serif KR 적용 */
-      font-family: 'Noto Serif KR', 'Batang', serif !important; 
-      font-size: 16px; 
-      color: #303030; 
-      border-bottom: 1px solid #63636300; 
-      padding-bottom: 16px; 
-      font-weight: 700;
-    }
-    
-    .markdown-body h2 { font-size: 2em; margin-top: 30px; }
-    
-    /* ❗ 2. '야옹' (P) 스타일 수정 */
-    .markdown-body p {
-      /* ❗ Noto Serif KR 적용 */
-      font-family: 'Noto Serif KR', 'Batang', serif; 
-      font-size: 15px; 
-      font-weight: normal; 
-      color: #303030; 
-      line-height: 1.4;
-      margin-top: 20px;
-      margin-bottom: 20px; 
-      font-weight: 500;
-    }
-    
-    .markdown-body blockquote { border-left: 4px solid #ffffff; padding-left: 15px; color: #ffffff; }
-    .markdown-body img { max-width: 100%; }
-    
-    .back-btn {
-      margin-bottom: 20px;
-      color: #ffffff;
-      font-size: 16px;
-      cursor: pointer;
-      display: inline-block;
-    }
-    .back-btn:hover { text-decoration: underline; }
-    /* ========================================= */
+    .writing-title {
+      font-size: 15px;
+      font-weight: 450;
+      margin: 0 0 3px 0;
+      color: #303030;
+      transition: color 0.2s;
+    }
+    
+    .writing-title:hover {
+      color: #b700ff; 
+      text-decoration: underline;
+    }
 
-    .toggle-btn {
-      display: none;
-      position: fixed;
-      top: 89%;
-      left: 0px;
-      transform: translateY(-50%);
-      background-color: rgba(255, 255, 255, 0.5);
-      color: #b899ff;
-      border: none;
-      padding: 10px 5.1px;
-      font-size: 18px;
-      border-radius: 0%;
-      z-index: 1000;
-    }
+    /* ========================================= */
+    
+    /* =========================================
+      [마크다운 본문 스타일] (Noto Serif KR 적용)
+      ========================================= */
+    .markdown-body {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 600px;
+      color: white;
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif;
+      line-height: 1.8;
+    }
 
-    .bgm-btn {
-      display: block;
-      position: fixed;
-      top: 9px;
-      right: 8px;
-      background-color: rgba(255, 255, 255, 0);
-      color: #7a6363;
-      border: 0px solid #FF0051;
-      padding: 10px 15px;
-      font-size: 17px;
-      border-radius: 0px;
-      z-index: 1000;
-      box-shadow: 0 0px 0px rgba(0,0,0,0.3);
-    }
+    /* ❗ 1. '# 고양이' (H1) 스타일 수정 */
+    .markdown-body h1 { 
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif !important; 
+      font-size: 16px; 
+      color: #303030; 
+      border-bottom: 1px solid #63636300; 
+      padding-bottom: 16px; 
+      font-weight: 700;
+    }
+    
+    .markdown-body h2 { font-size: 2em; margin-top: 30px; }
+    
+    /* ❗ 2. '야옹' (P) 스타일 수정 */
+    .markdown-body p {
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif; 
+      font-size: 15px; 
+      font-weight: normal; 
+      color: #303030; 
+      line-height: 1.4;
+      margin-top: 20px;
+      margin-bottom: 20px; 
+      font-weight: 500;
+    }
+    
+    .markdown-body blockquote { border-left: 4px solid #ffffff; padding-left: 15px; color: #ffffff; }
+    .markdown-body img { max-width: 100%; }
+    
+    .back-btn {
+      margin-bottom: 20px;
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .back-btn:hover { text-decoration: underline; }
+    /* ========================================= */
 
-    .mobile-header {
-      display: none;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    .toggle-btn {
+      display: none;
+      position: fixed;
+      top: 89%;
+      left: 0px;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.5);
+      color: #b899ff;
+      border: none;
+      padding: 10px 5.1px;
+      font-size: 18px;
+      border-radius: 0%;
+      z-index: 1000;
+    }
 
-    .mobile-header img {
-      width: 60px;
-      margin-top: 10px;
-      border-radius: 50%;
-    }
+    .bgm-btn {
+      display: block;
+      position: fixed;
+      top: 9px;
+      right: 8px;
+      background-color: rgba(255, 255, 255, 0);
+      color: #7a6363;
+      border: 0px solid #FF0051;
+      padding: 10px 15px;
+      font-size: 17px;
+      border-radius: 0px;
+      z-index: 1000;
+      box-shadow: 0 0px 0px rgba(0,0,0,0.3);
+    }
 
-    /* 모바일 반응형 스타일 */
-    @media (max-width: 768px) {
-        
-        /* Heartmore99% 링크의 클릭 영역을 텍스트 크기에 맞게 조정 */
-        .mobile-header a {
-            display: inline-block; 
-        }
-        
-        /* 🚩 Heartmore99% 타이틀 링크에만 모바일 클릭 효과 제거 적용 */
-        .mobile-header a:focus,
-        .mobile-header a:active {
-            outline: none !important;
-            box-shadow: none !important;
-            background-color: transparent !important;
-            transform: none !important;
-        }
-        
-      body {
-        flex-direction: column;
-      }
+    .mobile-header {
+      display: none;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-      .toggle-btn {
-        display: block;
-      }
+    .mobile-header img {
+      width: 60px;
+      margin-top: 10px;
+      border-radius: 50%;
+    }
 
-      .bgm-btn {
-        top: auto;
-        bottom: 4px;
-        right: 360px;
-      }
+    /* 모바일 반응형 스타일 */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
 
-      .sidebar {
-        width: 50%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        padding: 40px 25px;
-        transform: translateX(-100%);
-        z-index: 999;
-        background-color: rgba(255, 242, 99, 0.95);
-      }
+      .toggle-btn {
+        display: block;
+      }
 
-      .sidebar.active {
-        transform: translateX(0);
-      }
+      .bgm-btn {
+        top: auto;
+        bottom: 4px;
+        right: 360px;
+      }
 
-      .content {
-        width: 100%;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px; 
-      }
-      
-      .left-column, .right-column {
-          display: contents; 
-      }
+      .sidebar {
+        width: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 40px 25px;
+        transform: translateX(-100%);
+        z-index: 999;
+        background-color: rgba(255, 242, 99, 0.95);
+      }
 
-      .mobile-header {
-        display: block;
-        color: white;
-      }
-    }
+      .sidebar.active {
+        transform: translateX(0);
+      }
 
-    /* 드래그 + 선택 방지 */
-    img, body, a, p, h3 {
-      -webkit-user-drag: none;
-      user-select: none;
-    }
+      .content {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px; 
+      }
+      
+      .left-column, .right-column {
+          display: contents; 
+      }
 
-    @media (max-width: 768px) {
-      #mobileSidebarOverlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0);
-        z-index: 998;
-        display: none;
-      }
-    }
-  </style>
+      .mobile-header {
+        display: block;
+        color: white;
+      }
+    }
+
+    /* 드래그 + 선택 방지 */
+    img, body, a, p, h3 {
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      #mobileSidebarOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0);
+        z-index: 998;
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-  <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">װ</button>
-  <button class="bgm-btn" id="bgmBtn" onclick="toggleBGM()">♬</button>
+  <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">װ</button>
+  <button class="bgm-btn" id="bgmBtn" onclick="toggleBGM()">♬</button>
 
-  <div class="sidebar" id="sidebar">
-        <a href="#" onclick="loadImages(1); return false;" style="color: white; text-decoration: none;">
-      <h3>Heartmore99%</h3>
-    </a>
-    <p>
-      <b><a href="#">.Graphics</a></b><br>
-      <b><a href="#">.Draw</a></b><br>
-      <span><a href="#" onclick="loadWriting(event)">.Text</a></span>
-    </p>
-    <p>
-      <a href="#" class="special-link" onclick="loadAbout(event)">About</a><br>
-      <a href="#" class="special-link">❤︎</a><br>
-      <a href="#" class="special-link">❤︎</a>
-    </p>
-  </div>
+  <div class="sidebar" id="sidebar">
+        <a href="#" onclick="loadImages(1); return false;" style="color: white; text-decoration: none;">
+      <h3>Heartmore99%</h3>
+    </a>
+    <p>
+      <b><a href="#">.Graphics</a></b><br>
+      <b><a href="#">.Draw</a></b><br>
+      <span><a href="#" onclick="loadWriting(event)">.Text</a></span>
+    </p>
+    <p>
+      <a href="#" class="special-link" onclick="loadAbout(event)">About</a><br>
+      <a href="#" class="special-link">❤︎</a><br>
+      <a href="#" class="special-link">❤︎</a>
+    </p>
+  </div>
 
-  <div class="content">
-    <div class="mobile-header">
-          <a href="#" onclick="loadImages(1); return false;" style="color: white; text-decoration: none;">
-       <h3>Heartmore99%</h3>
-      </a>
-    </div>
-  </div>
+  <div class="content">
+    <div class="mobile-header">
+          <a href="#" onclick="loadImages(1); return false;" style="color: white; text-decoration: none;">
+       <h3>Heartmore99%</h3>
+      </a>
+    </div>
+  </div>
 
-  <audio id="bgm" loop>
-    <source src="main/audio.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="bgm" loop>
+    <source src="main/audio.mp3" type="audio/mpeg">
+  </audio>
 
-  <div id="mobileSidebarOverlay"></div>
+  <div id="mobileSidebarOverlay"></div>
 
-  <script>
-    // 사이드바 토글
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-    }
+  <script>
+    // 사이드바 토글
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
 
-    // 이미지 확대
-    function enlarge(img) {
-      const overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = 0;
-      overlay.style.left = 0;
-      overlay.style.width = '100vw';
-      overlay.style.height = '100vh';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      overlay.style.display = 'flex';
-      overlay.style.justifyContent = 'center';
-      overlay.style.alignItems = 'center';
-      overlay.style.zIndex = 9999;
+    // 이미지 확대
+    function enlarge(img) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.style.zIndex = 9999;
 
-      const bigImg = document.createElement('img');
-      bigImg.src = img.src;
-      bigImg.style.maxWidth = '90vw';
-      bigImg.style.maxHeight = '90vh';
-      bigImg.style.objectFit = 'contain';
+      const bigImg = document.createElement('img');
+      bigImg.src = img.src;
+      bigImg.style.maxWidth = '90vw';
+      bigImg.style.maxHeight = '90vh';
+      bigImg.style.objectFit = 'contain';
 
-      overlay.appendChild(bigImg);
-      overlay.onclick = () => overlay.remove();
+      overlay.appendChild(bigImg);
+      overlay.onclick = () => overlay.remove();
 
-      document.body.appendChild(overlay);
-    }
+      document.body.appendChild(overlay);
+    }
 
-    // BGM 토글
-    function toggleBGM() {
-      const bgm = document.getElementById('bgm');
-      if (bgm.paused) { bgm.play(); } else { bgm.pause(); }
-    }
+    // BGM 토글
+    function toggleBGM() {
+      const bgm = document.getElementById('bgm');
+      if (bgm.paused) { bgm.play(); } else { bgm.pause(); }
+    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const bgm = document.getElementById('bgm');
-      bgm.play().catch(() => { console.log('자동재생 불가, 버튼으로 재생 가능'); });
-    });
+    window.addEventListener('DOMContentLoaded', () => {
+      const bgm = document.getElementById('bgm');
+      bgm.play().catch(() => { console.log('자동재생 불가, 버튼으로 재생 가능'); });
+    });
 
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('dragstart', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
 
-    const mobileOverlay = document.getElementById('mobileSidebarOverlay');
-    const sidebar = document.getElementById('sidebar');
-    setInterval(() => {
-      const isMobile = window.innerWidth <= 768;
-      const open = sidebar.classList.contains('active');
-      mobileOverlay.style.display = (isMobile && open) ? 'block' : 'none';
-    }, 100);
-    mobileOverlay.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      mobileOverlay.style.display = 'none';
-    });
+    const mobileOverlay = document.getElementById('mobileSidebarOverlay');
+    const sidebar = document.getElementById('sidebar');
+    setInterval(() => {
+      const isMobile = window.innerWidth <= 768;
+      const open = sidebar.classList.contains('active');
+      mobileOverlay.style.display = (isMobile && open) ? 'block' : 'none';
+    }, 100);
+    mobileOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      mobileOverlay.style.display = 'none';
+    });
 
-    // ❗ 이미지 세트
-    const imageSets = {
-      1: [
-        "portfolio/1c/글리치타이포.png",
-        "portfolio/1c/고리게임.webp",
-        "portfolio/1c/홀로그램금붕어.webp",
-        "portfolio/1c/프리지아.webp",
-        "portfolio/1c/별사과.webp",
-        "portfolio/1c/다이아.webp",     
-        "portfolio/1c/소라.webp",
-        "portfolio/1c/하트링.png",
-        "portfolio/1c/그림자카나리.webp",
-        "portfolio/1c/불장미.webp"
-      ],
-      2: [
-        "portfolio/1c/end.png"
-      ]
-    };
+    // ❗ 이미지 세트
+    const imageSets = {
+      1: [
+        "portfolio/1c/글리치타이포.png",
+        "portfolio/1c/고리게임.webp",
+        "portfolio/1c/홀로그램금붕어.webp",
+        "portfolio/1c/프리지아.webp",
+        "portfolio/1c/별사과.webp",
+        "portfolio/1c/다이아.webp",     
+        "portfolio/1c/소라.webp",
+        "portfolio/1c/하트링.png",
+        "portfolio/1c/그림자카나리.webp",
+        "portfolio/1c/불장미.webp"
+      ],
+      2: [
+        "portfolio/1c/end.png"
+      ]
+    };
 
-    // 📝 [3. Writing 데이터 목록]
-    // path: 'post/파일명.md' 형식으로 적어주세요.
-    const writingData = [
-      {
-        title: "임시제목",
-        date: "2025-12-12",
-        path: "posts/p3.md" // ❗ 'post' 폴더 이름으로 수정
-      },
-      {
-        title: "분홍색",
-        date: "2025-12-12",
-        path: "posts/p1.md" // 다른 파일이 있다면
-      }
-    ];
+    // 📝 [3. Writing 데이터 목록]
+    // path: 'post/파일명.md' 형식으로 적어주세요.
+    const writingData = [
+      {
+        title: "임시제목",
+        date: "2025-12-12",
+        path: "posts/p3.md" // ❗ 'post' 폴더 이름으로 수정
+      },
+      {
+        title: "분홍색",
+        date: "2025-12-12",
+        path: "posts/p1.md" // 다른 파일이 있다면
+      }
+    ];
 
-    // 📝 [MD 파일 읽어서 보여주는 함수]
-    function loadMarkdownPost(filePath) {
-      const content = document.querySelector(".content");
-      
-      // 화면 비우기
-      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-      elementsToRemove.forEach(i => i.remove());
+    // 📝 [MD 파일 읽어서 보여주는 함수]
+    function loadMarkdownPost(filePath) {
+      const content = document.querySelector(".content");
+      
+      // 화면 비우기
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
 
-      const loading = document.createElement("div");
-      loading.style.color = "white";
-      loading.innerText = "Loading...";
-      content.appendChild(loading);
+      const loading = document.createElement("div");
+      loading.style.color = "white";
+      loading.innerText = "Loading...";
+      content.appendChild(loading);
 
-      // md 파일 fetch
-      fetch(filePath)
-        .then(response => {
-          if (!response.ok) throw new Error("파일을 찾을 수 없습니다: " + filePath);
-          return response.text();
-        })
-        .then(text => {
-          loading.remove(); // 로딩 제거
+      // md 파일 fetch
+      fetch(filePath)
+        .then(response => {
+          if (!response.ok) throw new Error("파일을 찾을 수 없습니다: " + filePath);
+          return response.text();
+        })
+        .then(text => {
+          loading.remove(); // 로딩 제거
 
-          // 1. 뒤로가기 버튼
-          const backBtn = document.createElement("div");
-          backBtn.className = "back-btn";
-          backBtn.innerHTML = "← Back to list";
-          backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
-          content.appendChild(backBtn);
+          // 1. 뒤로가기 버튼
+          const backBtn = document.createElement("div");
+          backBtn.className = "back-btn";
+          backBtn.innerHTML = "← Back to list";
+          backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
+          content.appendChild(backBtn);
 
-          // 2. 마크다운 내용을 HTML로 변환하여 표시
-          const article = document.createElement("div");
-          article.className = "markdown-body";
-          // marked.parse() 함수로 마크다운을 HTML로 변환합니다.
-          article.innerHTML = marked.parse(text); 
-          content.appendChild(article);
-        })
-        .catch(err => {
-          loading.innerText = "글을 불러오는데 실패했습니다. (경로를 확인하세요: " + filePath + ")";
-          console.error(err);
-          
-          // 에러 발생 시 뒤로가기 버튼 추가 (선택 사항)
-          if(!content.querySelector(".back-btn")) {
-             const backBtn = document.createElement("div");
-             backBtn.className = "back-btn";
-             backBtn.innerHTML = "← 목록으로 돌아가기";
-             backBtn.onclick = () => loadWriting(); 
-             content.appendChild(backBtn);
-          }
-        });
-    }
+          // 2. 마크다운 내용을 HTML로 변환하여 표시
+          const article = document.createElement("div");
+          article.className = "markdown-body";
+          // marked.parse() 함수로 마크다운을 HTML로 변환합니다.
+          article.innerHTML = marked.parse(text); 
+          content.appendChild(article);
+        })
+        .catch(err => {
+          loading.innerText = "글을 불러오는데 실패했습니다. (경로를 확인하세요: " + filePath + ")";
+          console.error(err);
+          
+          // 에러 발생 시 뒤로가기 버튼 추가 (선택 사항)
+          if(!content.querySelector(".back-btn")) {
+             const backBtn = document.createElement("div");
+             backBtn.className = "back-btn";
+             backBtn.innerHTML = "← 목록으로 돌아가기";
+             backBtn.onclick = () => loadWriting(); 
+             content.appendChild(backBtn);
+          }
+        });
+    }
 
-    // 📝 [Writing 목록 화면 로드 함수]
-    function loadWriting(e) {
-      if(e) e.preventDefault(); 
+    // 📝 [Writing 목록 화면 로드 함수]
+    function loadWriting(e) {
+      if(e) e.preventDefault(); 
 
-      const content = document.querySelector(".content");
-      
-      // 화면 비우기
-      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-      elementsToRemove.forEach(i => i.remove());
+      const content = document.querySelector(".content");
+      
+      // 화면 비우기
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
 
-      const listContainer = document.createElement("div");
-      listContainer.classList.add("writing-list");
+      const listContainer = document.createElement("div");
+      listContainer.classList.add("writing-list");
 
-      writingData.forEach(item => {
-        const itemDiv = document.createElement("div");
-        itemDiv.classList.add("writing-item");
+      writingData.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("writing-item");
 
-        // 제목 클릭 시 loadMarkdownPost 함수 실행 (md 경로 전달)
-        itemDiv.innerHTML = `
-          <div class="writing-meta">${item.date}</div>
-          <div class="writing-title" onclick="loadMarkdownPost('${item.path}')">${item.title}</div>
-          `;
-        listContainer.appendChild(itemDiv);
-      });
+        // 제목 클릭 시 loadMarkdownPost 함수 실행 (md 경로 전달)
+        itemDiv.innerHTML = `
+          <div class="writing-meta">${item.date}</div>
+          <div class="writing-title" onclick="loadMarkdownPost('${item.path}')">${item.title}</div>
+          `;
+        listContainer.appendChild(itemDiv);
+      });
 
-      content.appendChild(listContainer);
+      content.appendChild(listContainer);
 
-      if (window.innerWidth <= 768) {
-          sidebar.classList.remove('active');
-      }
-    }
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+      }
+    }
 
-    // 📝 [About Me 내용 로드 함수]
-    function loadAbout(e) {
-      if(e) e.preventDefault(); 
-      
-      const content = document.querySelector(".content");
-      
-      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-      elementsToRemove.forEach(i => i.remove());
+    // 📝 [About Me 내용 로드 함수]
+    function loadAbout(e) {
+      if(e) e.preventDefault(); 
+      
+      const content = document.querySelector(".content");
+      
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
 
-      const textBox = document.createElement("div");
-      textBox.classList.add("about-text-box");
+      const textBox = document.createElement("div");
+      textBox.classList.add("about-text-box");
 
-      textBox.innerHTML = `
-        <div style="
-          /* About 섹션은 기존 폰트(Pretendard) 유지 */
-          font-family: 'Pretendard', sans-serif;
-          font-size: 14px;
-          line-height: 1;
-          color: #9e064a;
-        ">
-          <h2 style="margin-top:0; font-size:19px; font-weight:700;">About</h2>
-          
-          안녕하세요. Heartmore99Percent입니다.<br>
-          이곳은 저의 작업물을 보관하는 공간입니다.<br><br>
+      textBox.innerHTML = `
+        <div style="
+          /* About 섹션은 기존 폰트(Pretendard) 유지 */
+          font-family: 'Pretendard', sans-serif;
+          font-size: 14px;
+          line-height: 1;
+          color: #9e064a;
+        ">
+          <h2 style="margin-top:0; font-size:19px; font-weight:700;">About</h2>
+          
+          안녕하세요. Heartmore99Percent입니다.<br>
+          이곳은 저의 작업물을 보관하는 공간입니다.<br><br>
 
-          순간의 이미지를 현실로 만듭니다.<br><br>
+          순간의 이미지를 현실로 만듭니다.<br><br>
 
-          머릿속에 떠오른 비정형의 이미지들을 보석을 세공하듯 다듬어<br>
-          가장 감각적인 형태로 구현해냅니다.<br><br>
+          머릿속에 떠오른 비정형의 이미지들을 보석을 세공하듯 다듬어<br>
+          가장 감각적인 형태로 구현해냅니다.<br><br>
 
-          협업 제안은 언제나 환영합니다.<br><br>
+          협업 제안은 언제나 환영합니다.<br><br>
 
-          <b>mail:</b> gatto27@naver.com<br>
-          <b>instagram:</b> @waml_design
-        </div>
-      `;
+          <b>mail:</b> gatto27@naver.com<br>
+          <b>instagram:</b> @waml_design
+        </div>
+      `;
 
-      content.appendChild(textBox);
+      content.appendChild(textBox);
 
-      if (window.innerWidth <= 768) {
-          sidebar.classList.remove('active');
-      }
-    }
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+      }
+    }
 
-    // 이미지 로드 함수 (1번, 2번)
-    function loadImages(setNumber) {
-      const content = document.querySelector(".content");
-      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-      elementsToRemove.forEach(i => i.remove()); 
+    // 이미지 로드 함수 (1번, 2번)
+    function loadImages(setNumber) {
+      const content = document.querySelector(".content");
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove()); 
 
-      if (setNumber === 1) {
-        const leftColumn = document.createElement("div");
-        leftColumn.classList.add("left-column");
-        
-        const rightColumn = document.createElement("div");
-        rightColumn.classList.add("right-column");
+      if (setNumber === 1) {
+        const leftColumn = document.createElement("div");
+        leftColumn.classList.add("left-column");
+        
+        const rightColumn = document.createElement("div");
+        rightColumn.classList.add("right-column");
 
-        imageSets[1].forEach((src, index) => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.onclick = () => enlarge(img);
-            img.style.order = index; 
+        imageSets[1].forEach((src, index) => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.onclick = () => enlarge(img);
+            img.style.order = index; 
 
-            if (index % 2 === 0) {
-                leftColumn.appendChild(img);
-            } else {
-                rightColumn.appendChild(img);
-            }
-        });
-        
-        content.appendChild(leftColumn);
-        content.appendChild(rightColumn);
+            if (index % 2 === 0) {
+                leftColumn.appendChild(img);
+            } else {
+                rightColumn.appendChild(img);
+            }
+        });
+        
+        content.appendChild(leftColumn);
+        content.appendChild(rightColumn);
 
-      } else if (imageSets[setNumber]) { // 해당 세트가 있을 때만
-        imageSets[setNumber].forEach(src => {
-          const img = document.createElement("img");
-          img.src = src;
-          img.onclick = () => enlarge(img);
-          content.appendChild(img);
-        });
-      }
+      } else if (imageSets[setNumber]) { // 해당 세트가 있을 때만
+        imageSets[setNumber].forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.onclick = () => enlarge(img);
+          content.appendChild(img);
+        });
+      }
 
-      if (window.innerWidth <= 768) {
-          sidebar.classList.remove('active');
-      }
-    }
+      if (window.innerWidth <= 768) {
+          sidebar.classList.remove('active');
+      }
+    }
 
-    // 초기 로드 시 1번 이미지 로드
-    window.addEventListener("DOMContentLoaded", () => {
-      loadImages(1); 
-    });
+    // 초기 로드 시 1번 이미지 로드
+    window.addEventListener("DOMContentLoaded", () => {
+      loadImages(1); 
+    });
 
-    // 1번, 2번 링크 클릭 이벤트
-    const links = document.querySelectorAll(".sidebar p b a");
-    links.forEach((link,index) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault(); 
-        loadImages(index + 1);
-      });
-    });
-  </script>
+    // 1번, 2번 링크 클릭 이벤트
+    const links = document.querySelectorAll(".sidebar p b a");
+    links.forEach((link,index) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault(); 
+        loadImages(index + 1);
+      });
+    });
+  </script>
 </body>
 </html>
