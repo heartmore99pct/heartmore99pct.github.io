@@ -6,8 +6,15 @@
   <link rel="icon" href="main/ico.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
+    /* [기존 폰트: STIX Two Text (기본 body 폰트)] */
     @import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap');
 
     body {
@@ -45,9 +52,9 @@
 
     /* 3번 링크 스타일 */
     .sidebar span a {
-        color: #FF0051; 
-        text-decoration: none;
-        font-weight: bold;
+      color: #FF0051; 
+      text-decoration: none;
+      font-weight: bold;
     }
     .sidebar span a:hover { text-decoration: underline; }
 
@@ -69,9 +76,9 @@
     
     /* PC용: 왼쪽/오른쪽 열 스타일 */
     .left-column, .right-column {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
     .content img {
@@ -80,114 +87,108 @@
       display: block; 
     }
 
-    /* About Me 텍스트 박스 스타일 */
+    /* About Me 텍스트 박스 스타일 (기존 폰트 유지) */
     .about-text-box {
-        grid-column: 1 / -1; 
-        color: white;
-        font-size: 18px;
-        line-height: 1.8;
-        white-space: pre-line;
-        font-family: 'STIX Two Text', serif;
+      grid-column: 1 / -1; 
+      color: white;
+      font-size: 18px;
+      line-height: 1.8;
+      white-space: pre-line;
+      font-family: 'STIX Two Text', serif;
     }
 
     /* =========================================
-       [Writing(글 목록) 스타일]
-       ========================================= */
+      [Writing(글 목록) 스타일] (기존 폰트 유지)
+      ========================================= */
     .writing-list {
-        grid-column: 1 / -1; 
-        width: 100%;
-        max-width: 800px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        color: white;
+      grid-column: 1 / -1; 
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: white;
     }
 
     .writing-item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        padding-bottom: 10px; /*아래글과 간격*/
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 10px; 
     }
     
     .writing-item:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
 
     .writing-meta {
-        font-size: 14px; /*날짜모양*/
-        font-weight: 100;
-        color: #b700ff; 
-        margin-bottom: 3px;
-        font-family: 'STIX Two Text', serif;
-        font-style: italic;
+      font-size: 14px; 
+      font-weight: 100;
+      color: #b700ff; 
+      margin-bottom: 3px;
+      font-family: 'STIX Two Text', serif;
+      font-style: italic;
     }
 
     .writing-title {
-        font-size: 15px;
-        font-weight: 450;
-        margin: 0 0 3px 0;
-        color: #303030;
-        transition: color 0.2s;
+      font-size: 15px;
+      font-weight: 450;
+      margin: 0 0 3px 0;
+      color: #303030;
+      transition: color 0.2s;
     }
     
     .writing-title:hover {
-        color: #b700ff; 
-        text-decoration: underline;
+      color: #b700ff; 
+      text-decoration: underline;
     }
 
-    /* 목록 요약 텍스트 제거에 따라 이 부분은 더 이상 사용되지 않습니다.
-    .writing-excerpt {
-        font-size: 16px;
-        line-height: 1.6;
-        color: #fce4ec; 
-        margin: 0;
-        font-family: sans-serif; 
-    }
-    */
     /* ========================================= */
     
     /* =========================================
-       [마크다운 본문 스타일]
-       ========================================= */
+      [마크다운 본문 스타일] (Noto Serif KR 적용)
+      ========================================= */
     .markdown-body {
-        grid-column: 1 / -1;
-        width: 100%;
-        max-width: 600px;
-        color: white;
-        font-family: 'sans-serif', serif;
-        line-height: 1.8;
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 600px;
+      color: white;
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif;
+      line-height: 1.8;
     }
 
     /* ❗ 1. '# 고양이' (H1) 스타일 수정 */
     .markdown-body h1 { 
-        font-family: 'sans-serif', sans-serif !important; /* Pretendard 폰트 적용 */
-        font-size: 16px; 
-        color: #303030; /* 글자색 변경 */
-        border-bottom: 1px solid #63636300; 
-        padding-bottom: 15px; 
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif !important; 
+      font-size: 16px; 
+      color: #303030; 
+      border-bottom: 1px solid #63636300; 
+      padding-bottom: 15px; 
     }
     
     .markdown-body h2 { font-size: 2em; margin-top: 30px; }
     
-    /* ❗ 2. '야옹' (첫 번째 P) 스타일 수정 */
+    /* ❗ 2. '야옹' (P) 스타일 수정 */
     .markdown-body p {
-        font-family: 'sans-serif', sans-serif; /* 궁서체 적용 */
-        font-size: 14px; 
-        font-weight: normal; /* 'none' 대신 'normal'이나 400 사용 권장 */
-        color: #303030; 
-        line-height: 1.2;
-        margin-top: 20px;
-        margin-bottom: 20px; 
+      /* ❗ Noto Serif KR 적용 */
+      font-family: 'Noto Serif KR', 'Batang', serif; 
+      font-size: 14px; 
+      font-weight: normal; 
+      color: #303030; 
+      line-height: 1.2;
+      margin-top: 20px;
+      margin-bottom: 20px; 
     }
     
     .markdown-body blockquote { border-left: 4px solid #ffffff; padding-left: 15px; color: #ffffff; }
     .markdown-body img { max-width: 100%; }
     
     .back-btn {
-        margin-bottom: 20px;
-        color: #ffffff;
-        font-size: 16px;
-        cursor: pointer;
-        display: inline-block;
+      margin-bottom: 20px;
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-block;
     }
     .back-btn:hover { text-decoration: underline; }
     /* ========================================= */
@@ -403,7 +404,7 @@
         "portfolio/1c/홀로그램금붕어.webp",
         "portfolio/1c/프리지아.webp",
         "portfolio/1c/별사과.webp",
-        "portfolio/1c/다이아.webp",    
+        "portfolio/1c/다이아.webp",     
         "portfolio/1c/소라.webp",
         "portfolio/1c/하트링.png",
         "portfolio/1c/그림자카나리.webp",
@@ -433,53 +434,53 @@
 
     // 📝 [MD 파일 읽어서 보여주는 함수]
     function loadMarkdownPost(filePath) {
-        const content = document.querySelector(".content");
-        
-        // 화면 비우기
-        const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
-        elementsToRemove.forEach(i => i.remove());
+      const content = document.querySelector(".content");
+      
+      // 화면 비우기
+      const elementsToRemove = Array.from(content.children).filter(el => !el.classList.contains('mobile-header'));
+      elementsToRemove.forEach(i => i.remove());
 
-        const loading = document.createElement("div");
-        loading.style.color = "white";
-        loading.innerText = "Loading...";
-        content.appendChild(loading);
+      const loading = document.createElement("div");
+      loading.style.color = "white";
+      loading.innerText = "Loading...";
+      content.appendChild(loading);
 
-        // md 파일 fetch
-        fetch(filePath)
-            .then(response => {
-                if (!response.ok) throw new Error("파일을 찾을 수 없습니다: " + filePath);
-                return response.text();
-            })
-            .then(text => {
-                loading.remove(); // 로딩 제거
+      // md 파일 fetch
+      fetch(filePath)
+        .then(response => {
+          if (!response.ok) throw new Error("파일을 찾을 수 없습니다: " + filePath);
+          return response.text();
+        })
+        .then(text => {
+          loading.remove(); // 로딩 제거
 
-                // 1. 뒤로가기 버튼
-                const backBtn = document.createElement("div");
-                backBtn.className = "back-btn";
-                backBtn.innerHTML = "← Back to list";
-                backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
-                content.appendChild(backBtn);
+          // 1. 뒤로가기 버튼
+          const backBtn = document.createElement("div");
+          backBtn.className = "back-btn";
+          backBtn.innerHTML = "← Back to list";
+          backBtn.onclick = () => loadWriting(); // 목록 함수 다시 호출
+          content.appendChild(backBtn);
 
-                // 2. 마크다운 내용을 HTML로 변환하여 표시
-                const article = document.createElement("div");
-                article.className = "markdown-body";
-                // marked.parse() 함수로 마크다운을 HTML로 변환합니다.
-                article.innerHTML = marked.parse(text); 
-                content.appendChild(article);
-            })
-            .catch(err => {
-                loading.innerText = "글을 불러오는데 실패했습니다. (경로를 확인하세요: " + filePath + ")";
-                console.error(err);
-                
-                // 에러 발생 시 뒤로가기 버튼 추가 (선택 사항)
-                if(!content.querySelector(".back-btn")) {
-                   const backBtn = document.createElement("div");
-                   backBtn.className = "back-btn";
-                   backBtn.innerHTML = "← 목록으로 돌아가기";
-                   backBtn.onclick = () => loadWriting(); 
-                   content.appendChild(backBtn);
-                }
-            });
+          // 2. 마크다운 내용을 HTML로 변환하여 표시
+          const article = document.createElement("div");
+          article.className = "markdown-body";
+          // marked.parse() 함수로 마크다운을 HTML로 변환합니다.
+          article.innerHTML = marked.parse(text); 
+          content.appendChild(article);
+        })
+        .catch(err => {
+          loading.innerText = "글을 불러오는데 실패했습니다. (경로를 확인하세요: " + filePath + ")";
+          console.error(err);
+          
+          // 에러 발생 시 뒤로가기 버튼 추가 (선택 사항)
+          if(!content.querySelector(".back-btn")) {
+             const backBtn = document.createElement("div");
+             backBtn.className = "back-btn";
+             backBtn.innerHTML = "← 목록으로 돌아가기";
+             backBtn.onclick = () => loadWriting(); 
+             content.appendChild(backBtn);
+          }
+        });
     }
 
     // 📝 [Writing 목록 화면 로드 함수]
@@ -528,6 +529,7 @@
 
       textBox.innerHTML = `
         <div style="
+          /* About 섹션은 기존 폰트(Pretendard) 유지 */
           font-family: 'Pretendard', sans-serif;
           font-size: 14px;
           line-height: 1;
